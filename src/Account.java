@@ -18,7 +18,7 @@ public class Account {
   }
 
   // Account constructor
-  public Account(string fileName) {
+  public Account(String fileName) {
       /* verify file ID is equal to the ID in the object
        * if not, throw IllegalArgumentException
        * Assign parameter values to attributes 

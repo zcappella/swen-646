@@ -1,4 +1,4 @@
-cpublic class DuplicateObjectException extends RuntimeException {
+public class DuplicateObjectException extends RuntimeException {
 
   private String objectID;    // the ID of the object that already exists
   private int accountID;      // the ID of the account that tried to add a duplicate equipment object
