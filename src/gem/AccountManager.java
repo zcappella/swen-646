@@ -11,7 +11,7 @@ import java.util.List;
 public class AccountManager {
 
   private String accountPath; // the path to where the accounts are being stored
-  private List accounts;  // a list of all of the accounts
+  private List<Account> accounts;  // a list of all of the accounts
   
   // AccountManager constructor
   public AccountManager(String accountPath) {
@@ -29,7 +29,7 @@ public class AccountManager {
   }
 
   // get the list of all the accounts
-  public List getAccounts() {
+  public List<Account> getAccounts() {
      return this.accounts;
   }
 

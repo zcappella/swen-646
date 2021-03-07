@@ -25,7 +25,7 @@ public abstract class Equipment {
       this.serialNumber = serialNumber;
       this.brand = brand;
       this.model = model;
-      this.equipmentPrice = equipmentPrice;
+      this.equipmentPrice = equipPrice;
       this.status = 0;
       this.transactionPrice = 0.0;
   }

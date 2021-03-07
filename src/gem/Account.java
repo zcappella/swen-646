@@ -18,7 +18,7 @@ public class Account {
 
   private int ID;  // unique way of identifying accounts from one another
   private int accountStatus;  // status of the account - either active or inactive
-  private List equipmentList;   // list of equipment owned or rented by the account owner
+  private List<Equipment> equipmentList;   // list of equipment owned or rented by the account owner
   private Owner owner;  // the owner of the account
   
   // Account constructor
@@ -72,7 +72,7 @@ public class Account {
   }
 
   // get the list of equipment associated to the account
-  public List getEquipmentList() {
+  public List<Equipment> getEquipmentList() {
      return this.equipmentList;
   }
 
