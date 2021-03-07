@@ -7,5 +7,5 @@ package gem;
  */
 
 public class Gem {
-    public static String path = '';
+    public static String path = "";
 }
