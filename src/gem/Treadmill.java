@@ -13,20 +13,17 @@ public class Treadmill extends Equipment {
   // Treadmill constructor
   public Treadmill(String serialNumber, String brand, String model, double equipPrice, float maxSpeed) {
 	  super(serialNumber, brand, model, equipPrice);
-	  /*
-	   * call Equipment constructor
-	   * Validate parameters 
-       * if any invalid or missing parameters, throw IllegalArgumentException
-	   * Assign parameter values to attributes
-	   */
+	  
+      // validate parameters
+      if (maxSpeed == 0)
+          throw new IllegalArgumentException("Treadmill values must be non-zero values!");
+    
+      this.maxSpeed = maxSpeed;
   }
 
   // get the equipment's max speed
   public float getMaxSpeed() {
-     /*
-      * return this.maxSpeed
-      */
-     return 0;
+     return this.maxSpeed;
   }
   
   // format the treadmill's information into a presentable string

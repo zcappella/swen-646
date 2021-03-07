@@ -17,61 +17,46 @@ public abstract class Equipment {
 
   // equipment class constructor
   public Equipment(String serialNumber, String brand, String model, double equipPrice) {
-	  /*
-	   * validate parameters
-       * if parameters are missing or invalid, throw IllegalArgumentException
-	   * set status to active
-       *
-       * throw InvalidEquipmentException if error is encountered during equipment creation
-	   */
+      // validate parameters
+      if (serialNumber == null || serialNumber.length() == 0 || brand == null || brand.length() == 0
+              || model == null || model.length() == 0 || equipPrice == 0 )
+          throw new IllegalArgumentException("Equipment values cannot be null/zero values!");
+
+      this.serialNumber = serialNumber;
+      this.brand = brand;
+      this.model = model;
+      this.equipmentPrice = equipmentPrice;
+      this.status = 0;
   }
 
   // get the equipment's serial number
   public String getSerialNumber() {
-     /*
-      * return this.serialNumber
-      */
-     return null;
+     return this.serialNumber;
   }
 
   // get the equipment's brand
   public String getBrand() {
-     /*
-      * return this.brand
-      */
-     return null;
+     return this.brand;
   }
 
   // get the equipment's model
-  public String getMode() {
-     /*
-      * return this.model
-      */
-     return null;
+  public String getModel() {
+     return this.model;
   }
 
   // get the equipment's equipment price
   public double getEquipmentPrice() {
-     /*
-      * return this.equipmentPrice
-      */
-     return 0.0;
+     return this.equipmentPrice;
   }
 
   // get the equipment's transaction price
   public double getTransactionPrice() {
-     /*
-      * return this.transactionPrice
-      */
-     return 0.0;
+     return this.transactionPrice;
   }
 
   // get the equipment's status
   public int getStatus() {
-     /*
-      * return this.status
-      */
-     return 0;
+     return this.status;
   }
   
   // calculate shipping costs
@@ -103,13 +88,11 @@ public abstract class Equipment {
   }
 
   // set the status of a given piece of equipment and return whether the action was successful
-  public boolean setStatus(int status) {
-	  /*
-	   * validate parameters
-	   * if the status is the same as the current status, fail
-	   * if not, set the status
-	   */
-        return false;
+  public void setStatus(int status) {
+	  if (status == this.status)
+        throw new IllegalArgumentException("Status cannot be null or the same as the current status!");
+
+      this.status = status;
   }
   
   // format the equipment's information into a presentable string

@@ -14,28 +14,23 @@ public class StationaryBike extends Equipment {
   // Stationary Bike constructor
   public StationaryBike(String serialNumber, String brand, String model, double equipPrice, int resistanceLevels, int height) {
 	  super(serialNumber, brand, model, equipPrice);
-	  /*
-	   * call Equipment constructor
-	   * Validate parameters
-       * if any invalid or missing parameters, throw IllegalArgumentException
-	   * Assign parameter values to attributes
-	   */
+	  
+      // validate parameters
+      if (resistanceLevels == 0 || height == 0)
+          throw new IllegalArgumentException("Stationary Bike values must be non-zero values!");
+    
+      this.resistanceLevels = resistanceLevels;
+      this.height = height;
   }
 
   // get the equipment's resistance levels
   public int getResistanceLevels() {
-     /*
-      * return this.resistanceLevels
-      */
-     return 0;
+     return this.resistanceLevels;
   }
 
   // get the equipment's height
   public int getHeight() {
-     /*
-      * return this.height
-      */
-     return 0;
+     return this.height;
   }
 
   // calculate the shipping costs

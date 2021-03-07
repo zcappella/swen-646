@@ -14,28 +14,23 @@ public class Stepper extends Equipment {
   // Stepper constructor
   public Stepper(String serialNumber, String brand, String model, double equipPrice, boolean heartMon, int height) {
 	  super(serialNumber, brand, model, equipPrice);
-	  /*
-	   * call Equipment constructor
-	   * Validate parameters
-       * if any invalid or missing parameters, throw IllegalArgumentException
-	   * Assign parameter values to attributes
-	   */
+	  
+      // validate parameters
+      if (height == 0)
+          throw new IllegalArgumentException("Stepper values must be non-zero values!");
+    
+      this.heartMonitor = heartMon;
+      this.height = height;
   }
 
   // get the equipment's heart monitor value
-  public int getHeartMonitor() {
-     /*
-      * return this.heartMonitor
-      */
-     return 0;
+  public boolean getHeartMonitor() {
+     return this.heartMonitor;
   }
 
   // get the equipment's height
   public int getHeight() {
-     /*
-      * return this.height
-      */
-     return 0;
+     return this.height;
   }
 
   // calculate the shipping costs
