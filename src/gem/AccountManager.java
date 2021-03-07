@@ -28,19 +28,12 @@ public class AccountManager {
 
   // get the path to the accounts
   public String getAccountPath() {
-     /*
-      * return this.accountPath
-      */
-     return null;
+     return this.accountPath;
   }
 
   // get the list of all the accounts
   public List getAccounts() {
-     /*
-      * loop through the accounts, adding the cloned accounts to a list
-      * return the list of cloned accounts
-      */
-     return null;
+     return this.accounts;
   }
 
   // load all of the user accounts into a list for management

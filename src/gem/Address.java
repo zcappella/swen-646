@@ -15,7 +15,7 @@ public class Address {
   
   // Address constructor
   public Address(String zipcode, String street, String city, String state) {
-	  // Ensure that none of the params are null or empty strings
+	 // Ensure that none of the params are null or empty strings
      if (street == null || city == null || state == null || zipcode == null
             || street.length() == 0 || city.length() == 0 || state.length() == 0 || zipcode.length() == 0)
             throw new IllegalArgumentException("Address values cannot be null/empty strings!");

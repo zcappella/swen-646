@@ -1,5 +1,7 @@
 package gem;
 
+import java.util.ArrayList;
+
 /**
  * A class holding the information for a given Account
  *
@@ -17,12 +19,15 @@ public class Account {
   
   // Account constructor
   public Account(int ID, Owner owner) {
-      /* Validate parameters
-       * if any invalid or missing parameters, throw IllegalArgumentException
-       * Assign parameter values to attributes 
-       * Create empty list of equipment objects
-       * Set account to active
-       */
+     // Ensure that none of the params are null or zero values
+     if (ID == 0 || owner == null)
+            throw new IllegalArgumentException("Account values cannot be null/zero values!");
+
+        this.ID = ID;
+        this.owner = owner.clone();
+        this.accountStatus = 0;
+        List<Equipment> emptyList = new ArrayList<>();
+        this.equipmentList = emptyList;
   }
 
   // Account constructor

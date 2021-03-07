@@ -22,71 +22,54 @@ public class Owner {
 
   // get the owner's name
   public String getName() {
-     /*
-      * return this.name
-      */
-     return null;
+     return this.name;
   }
 
   // get the owner's email address
   public String getEmailAddress() {
-     /*
-      * return this.emailAddress
-      */
-     return null;
+     return this.emailAddress;
   }
 
   // get the owner's phone number
   public String getPhoneNumber() {
-     /*
-      * return this.phoneNumber
-      */
-     return null;
+     return this.phoneNumber;
   }
 
   // get the owner's address
   public Address getAddress() {
-     /*
-      * return this.address
-      */
-     return null;
+     return this.address;
   }
   
   // set the owner's name
   public void setName(String name) {
-	  /*
-	   * validate parameters
-	   * if the name is the same as the current name, throw IllegalArgumentException
-	   * else, set the name
-	   */
+      if (name == null || name == this.name)
+          throw new IllegalArgumentException("Name cannot be null or the same as the current name!");
+
+      this.name = name;
   }
 
   // set the owner's email address
   public void setEmailAddress(String email) {
-	  /*
-	   * validate parameters
-	   * if the email address is the same as the current email, throw IllegalArgumentException
-	   * else, set the email
-	   */
+	  if (email == null || email == this.emailAddress)
+          throw new IllegalArgumentException("Email address cannot be null or the same as the current email address!");
+
+      this.emailAddress = email;
   }
 
   // set the owner's phone number
   public void setPhoneNumber(String phoneNumber) {
-	  /*
-	   * validate parameters
-	   * if the phone mumber is the same as the current number, throw IllegalArgumentException
-	   * else, set the phone number
-	   */
+	  if (phoneNumber == null || phoneNumber == this.phoneNumber)
+          throw new IllegalArgumentException("Phone number cannot be null or the same as the current phone number!");
+
+      this.phoneNumber = phoneNumber;
   }
 
-  // set the owner's phone number
-  public void setAddress(String zipcode) {
-      /*
-       * validate parameters
-       * if the zipcode is the same as the current zipcode, throw IllegalArgumentException
-       * else, set the address by getting a clone of the correct
-       * address associated to the zipcode
-       */
+  // set the owner's address
+  public void setAddress(Address address) {
+      if (address == null || address.toString() == this.address.toString())
+          throw new IllegalArgumentException("Address cannot be null or the same as the current address!");
+
+      this.address = address.clone();
   }
 
   // format the owner's information into a presentable string

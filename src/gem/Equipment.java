@@ -27,6 +27,7 @@ public abstract class Equipment {
       this.model = model;
       this.equipmentPrice = equipmentPrice;
       this.status = 0;
+      this.transactionPrice = 0.0;
   }
 
   // get the equipment's serial number
