@@ -15,15 +15,12 @@ public class AccountManager {
   
   // AccountManager constructor
   public AccountManager(String accountPath) {
-	  /*
-	   * Validate parameters
-       * if any invalid or missing parameters, throw IllegalArgumentException
-	   * Assign parameters' values to attributes
-       *
-       * load all of the accounts located at the accountPath
-       * using the loadAccounts method
-       *
-	   */
+      // validate parameters
+      if (accountPath == null || accountPath.length() == 0)
+          throw new IllegalArgumentException("Path cannot be null/empty string!");
+    
+      this.accountPath = accountPath;
+      loadAccounts();
   }
 
   // get the path to the accounts

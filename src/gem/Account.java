@@ -1,14 +1,18 @@
 package gem;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 /**
  * A class holding the information for a given Account
  *
  * @author Zachary Cappella
  */
-
-import java.util.List;
 
 public class Account {
 
@@ -23,21 +27,38 @@ public class Account {
      if (ID == 0 || owner == null)
             throw new IllegalArgumentException("Account values cannot be null/zero values!");
 
-        this.ID = ID;
-        this.owner = owner.clone();
-        this.accountStatus = 0;
-        List<Equipment> emptyList = new ArrayList<>();
-        this.equipmentList = emptyList;
+     this.ID = ID;
+     this.owner = owner.clone();
+     this.accountStatus = 0;
+     List<Equipment> emptyList = new ArrayList<>();
+     this.equipmentList = emptyList;
   }
 
   // Account constructor
   public Account(String fileName) {
-      /* verify file ID is equal to the ID in the object
-       * if not, throw IllegalArgumentException
-       * Assign parameter values to attributes 
-       * Create empty list of equipment objects
-       * Set account to active
-       */
+
+     // Ensure that none of the params are null or zero values
+     if (fileName == null || fileName.length() == 0)
+            throw new IllegalArgumentException("Account values cannot be null/zero values!");
+
+     // Loading the YAML file from the file name
+     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+     File file = new File(classLoader.getResource(fileName).getFile());
+
+     // Instantiating a new ObjectMapper as a YAMLFactory
+     ObjectMapper om = new ObjectMapper(new YAMLFactory());
+
+     // Mapping the account from the YAML file to the Employee class
+     Account account;
+	 try {
+	 	account = om.readValue(file, Account.class);
+	 	this.ID = account.ID;
+	    this.owner = account.owner.clone();
+	    this.accountStatus = account.accountStatus;
+	    this.equipmentList = account.equipmentList;
+	 } catch (IOException e) {
+		throw new InvalidLoadException(fileName, "Could not be loaded because " + e);
+	 }
   }
 
   // get the ID of the account

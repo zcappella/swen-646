@@ -14,10 +14,15 @@ public class Owner {
 
   // Owner constructor
   public Owner(String name, String emailAddress, String phoneNumber, Address address) {
-	  /* Validate parameters
-       * if any invalid or missing parameters, throw IllegalArgumentException
-	   * Assign parameter values to attributes 
-	   */
+	  // validate parameters
+      if (name == null || name.length() == 0 || emailAddress == null || emailAddress.length() == 0
+              || phoneNumber == null || phoneNumber.length() == 0 || address == null)
+          throw new IllegalArgumentException("Owner values cannot be null/zero values!");
+
+      this.name = name;
+      this.emailAddress = emailAddress;
+      this.phoneNumber = phoneNumber;
+      this.address = address.clone();
   }
 
   // get the owner's name

@@ -2,5 +2,9 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/Users/zaccappella/Downloads/jackson-databind-2.12.2.jar"/>
+	<classpathentry kind="lib" path="/Users/zaccappella/Downloads/jackson-dataformat-yaml-2.12.2.jar"/>
+	<classpathentry kind="lib" path="/Users/zaccappella/Downloads/jackson-annotations-2.12.2.jar"/>
+	<classpathentry kind="lib" path="/Users/zaccappella/Downloads/jackson-core-2.12.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
