@@ -47,15 +47,21 @@ public class AccountManager {
 
      File f = new File(this.accountPath);
      File fileList[] = f.listFiles();
-     for (File file : fileList) {
-        try {
-            Account account = new Account(String.valueOf(file.getAbsolutePath()));
-            accountList.add(account);
-        } catch(IllegalArgumentException e) {
-            throw new InvalidLoadException(String.valueOf(file.getAbsolutePath()), e.getMessage());
-        }
+     if (fileList.length == 0)
+     	this.accounts = new ArrayList<>();
+     else {
+     	for (File file : fileList) {
+            if (!file.getName().matches("^account-[0-9]{1,6}.yaml$"))
+            	continue;
+	        try {
+	            Account account = new Account(String.valueOf(file.getAbsolutePath()));
+	            accountList.add(account);
+	        } catch(IllegalArgumentException e) {
+	            throw new InvalidLoadException(String.valueOf(file.getAbsolutePath()), e.getMessage());
+	        }
+	     }
+	     this.accounts = accountList;
      }
-     this.accounts = accountList;
 	  /*
 	   * ensure the account path exists
        * if it doesn't exist, raise InvalidLoadException

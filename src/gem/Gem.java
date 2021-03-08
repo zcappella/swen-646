@@ -27,8 +27,26 @@ public class Gem {
         testScenario4();
         testScenario5();
     }
+    
+    /*
+     * Function for generating a new Owner stub for Account objects
+     */
+    private static Owner generateOwnerStub() {
+        return new Owner("Owner Stub", "stub@gmail.com", "111-111-1111", generateAddressStub().clone());
+    }
 
+    /*
+     * Function for generating a new Address stub for Owner objects
+     */
+    private static Address generateAddressStub() {
+        return new Address("12345", "Address Stub Street", "Stub City", "ST");
+    }
+
+    /*
+     * Create a new Account Manager object, load the accounts at the specified path, and dump the account information available
+     */
     public static void testScenario1() {
+    	System.out.println("Test Scenario #1:");
         AccountManager am = new AccountManager(accountPath);
         
         List<Account> accountList = am.getAccounts();
@@ -42,21 +60,135 @@ public class Gem {
         	System.out.println("Account Owner: " + account.getOwner().toString());
         	System.out.println("-----------------------------------------");
         }
+        System.out.println("\n");
     }
 
+    /*
+     * Create a new Address object
+     */
     public static void testScenario2() {
-        
+    	System.out.println("Test Scenario #2:");
+        Address address = new Address(
+             "12345",
+             "Example Street",
+             "Bowie",
+             "MD");
+
+        System.out.println("---------- Address Information ----------");
+        System.out.println("Address Zipcode: " + address.getZipcode());
+        System.out.println("Address Street: " + address.getStreet());
+        System.out.println("Address City: " + address.getCity());
+        System.out.println("Address State: " + address.getState());
+        System.out.println("-----------------------------------------");
+
+        System.out.println("\n");
     }
 
+    /*
+     * Create a new Owner object
+     */
     public static void testScenario3() {
-        
+    	System.out.println("Test Scenario #3:");
+        Owner owner = new Owner(
+                 "Zac Cappella",
+                 "zcappella@student.umgc.edu",
+                 "111-222-3333",
+                 generateAddressStub().clone());
+        System.out.println("---------- Owner Information ----------");
+        System.out.println("Owner Name: " + owner.getName());
+        System.out.println("Owner Email Address: " + owner.getEmailAddress());
+        System.out.println("Owner Phone Number: " + owner.getPhoneNumber());
+        System.out.println("Owner Zipcode: " + owner.getAddress().getZipcode());
+        System.out.println("Owner Street: " + owner.getAddress().getStreet());
+        System.out.println("Owner City: " + owner.getAddress().getCity());
+        System.out.println("Owner State: " + owner.getAddress().getState());
+        System.out.println("-----------------------------------------");
+
+    	System.out.println("\n");
     }
 
+    /*
+     * Create a new Account object
+     */
     public static void testScenario4() {
-        
+    	System.out.println("Test Scenario #4:");
+        Account account = new Account(
+            1,
+            generateOwnerStub().clone());
+        System.out.println("---------- Account Information ----------");
+        System.out.println("Account ID: " + account.getID());
+        System.out.println("Account Status: " + account.getAccountStatus());
+        System.out.println("Account Owner Name: " + account.getOwner().getName());
+        if (account.getEquipmentList().isEmpty())
+            System.out.println("Account Equipment List is empty");
+        else
+            throw new InvalidOperationException(String.valueOf(account.getID()), "Account created with non-emtpy equipment list.");
+        System.out.println("Account Owner Email Address: " + account.getOwner().getEmailAddress());
+        System.out.println("Account Owner Phone Number: " + account.getOwner().getPhoneNumber());
+        System.out.println("Account Owner Zipcode: " + account.getOwner().getAddress().getZipcode());
+        System.out.println("Account Owner Street: " + account.getOwner().getAddress().getStreet());
+        System.out.println("Account Owner City: " + account.getOwner().getAddress().getCity());
+        System.out.println("Account Owner State: " + account.getOwner().getAddress().getState());
+        System.out.println("-----------------------------------------");
+
+    	System.out.println("\n");
     }
 
+    /*
+     * Create a new equipment object of each type
+     */
     public static void testScenario5() {
-        
+    	System.out.println("Test Scenario #5:");
+        Treadmill treadmill = new Treadmill(
+            "TH000001",
+            "Test Treadmill Brand",
+            "Test Treadmill Model",
+            100.00,
+            12.0);
+
+        System.out.println("---------- Treadmill Information ----------");
+        System.out.println("Treadmill Serial Number: " + treadmill.getSerialNumber());
+        System.out.println("Treadmill Brand: " + treadmill.getBrand());
+        System.out.println("Treadmill Model: " + treadmill.getModel());
+        System.out.println("Treadmill Equipment Price: " + String.valueOf(treadmill.getEquipmentPrice()));
+        System.out.println("Treadmill Max Speed: " + treadmill.getMaxSpeed());
+        System.out.println("-----------------------------------------");
+        System.out.println("\n");
+
+        Stepper stepper = new Stepper(
+            "ST000001",
+            "Test Stepper Brand",
+            "Test Stepper Model",
+            975.50,
+            true,
+            12);
+
+        System.out.println("---------- Stepper Information ----------");
+        System.out.println("Stepper Serial Number: " + stepper.getSerialNumber());
+        System.out.println("Stepper Brand: " + stepper.getBrand());
+        System.out.println("Stepper Model: " + stepper.getModel());
+        System.out.println("Stepper Equipment Price: " + String.valueOf(stepper.getEquipmentPrice()));
+        System.out.println("Stepper Heart Monitor: " + String.valueOf(stepper.getHeartMonitor()));
+        System.out.println("Stepper Height: " + String.valueOf(stepper.getHeight()));
+        System.out.println("-----------------------------------------");
+        System.out.println("\n");
+
+        StationaryBike sb = new StationaryBike(
+            "SB000001",
+            "Test Stationary Bike Brand",
+            "Test Stationary Bike Model",
+            899.99,
+            15,
+            4);
+        System.out.println("---------- Stationary Bike Information ----------");
+        System.out.println("Stationary Bike Serial Number: " + sb.getSerialNumber());
+        System.out.println("Stationary Bike Brand: " + sb.getBrand());
+        System.out.println("Stationary Bike Model: " + sb.getModel());
+        System.out.println("Stationary Bike Equipment Price: " + String.valueOf(sb.getEquipmentPrice()));
+        System.out.println("Stationary Bike Resistance Levels: " + String.valueOf(sb.getResistanceLevels()));
+        System.out.println("Stationary Bike Height: " + String.valueOf(sb.getHeight()));
+        System.out.println("-----------------------------------------");
+
+    	System.out.println("\n");
     }
 }
