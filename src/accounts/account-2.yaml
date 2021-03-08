@@ -1,0 +1,19 @@
+accountID: 0002
+accountStatus: 0
+equipmentList:
+  - serialNumber: SB000001
+    brand: Example
+    model: New Stationary Bike
+    equipmentPrice: 500.00
+    status: 1
+    resistanceLevels: 15
+    height: 12
+owner:
+  name: Sam Cappella
+  emailAddress: test@gmail.com
+  phoneNumber: 111-222-3333
+  address:
+    zipcode: 12345
+    street: Example Street
+    city: Example city
+    state: ST

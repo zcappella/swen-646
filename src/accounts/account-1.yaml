@@ -1,24 +1,27 @@
 accountID: 0001
 accountStatus: 0
-equipmentlist:
+equipmentList:
   - serialNumber: TH000001
     brand: Example
     model: New Treadmill
     equipmentPrice: 100.00
     transactionPrice: 150.00
     status: 2
+    maxSpeed: 10.0
   - serialNumber: ST000001
     brand: Example
     model: New Stepper
-    equipmentprice: 100.00
+    equipmentPrice: 100.00
     transactionPrice: 150.00
     status: 1
+    heartMonitor: true
+    height: 12
 owner:
   name: Zac Cappella
   emailAddress: zcappella@student.umgc.edu
   phoneNumber: 111-222-3333
   address:
-    zipcode: 11111
+    zipcode: '11111'
     street: Example Street
     city: Example city
     state: ST

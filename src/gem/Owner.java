@@ -87,9 +87,6 @@ public class Owner {
 
   // create and return a copy of the owner information
   public Owner clone() {
-	  /*
-	   * return new Owner(this.name, ...)
-	   */
-	  return null;
+	  return new Owner(this.name, this.emailAddress, this.phoneNumber, this.address);
   }
 }

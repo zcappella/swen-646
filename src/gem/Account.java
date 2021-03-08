@@ -1,12 +1,14 @@
 package gem;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import org.yaml.snakeyaml.Yaml;
 
 /**
  * A class holding the information for a given Account
@@ -36,32 +38,91 @@ public class Account {
 
   // Account constructor
   public Account(String fileName) {
-
      // Ensure that none of the params are null or zero values
      if (fileName == null || fileName.length() == 0)
             throw new IllegalArgumentException("Account values cannot be null/zero values!");
 
-     // Loading the YAML file from the file name
-     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-     File file = new File(classLoader.getResource(fileName).getFile());
+     int fileID = 0;
+     int fileStatus = 0;
+     Owner fileOwner;
+     List<Equipment> fileList = new ArrayList<>();
+     
+     FileInputStream inputStream;
+	 try {
+		 Yaml yaml = new Yaml();
+		 // Loading the YAML file from the file name
+	     inputStream = new FileInputStream(fileName);
+	
+		 Map yamlAccount = yaml.load(inputStream);
+		 fileID = (int) yamlAccount.get("accountID");
+		 fileStatus = (int) yamlAccount.get("accountStatus");
 
-     // Instantiating a new ObjectMapper as a YAMLFactory
-     ObjectMapper om = new ObjectMapper(new YAMLFactory());
+	     List<Map> yamlEquipment = (List) yamlAccount.get("equipmentList");
+	     for (Map equipment : yamlEquipment) {
+	    	 String serialNumber = (String) equipment.get("serialNumber");
+	    	 if (serialNumber.substring(0,2).equals("TH")) {
+	    		 Treadmill loadedEquipment = new Treadmill(
+	    				 serialNumber,
+	    				 (String) equipment.get("brand"),
+	    				 (String) equipment.get("model"),
+	    				 (double) equipment.get("equipmentPrice"),
+	    				 (double) equipment.get("maxSpeed"));
+	    		 fileList.add(loadedEquipment);
+	    		 continue;
+	    	 }
+	    	 
+	    	 if (serialNumber.substring(0,2).equals("ST")) {
+	    		 Stepper loadedEquipment = new Stepper(
+	    				 serialNumber,
+	    				 (String) equipment.get("brand"),
+	    				 (String) equipment.get("model"),
+	    				 (double) equipment.get("equipmentPrice"),
+	    				 (boolean) equipment.get("heartMonitor"),
+	    				 (int) equipment.get("height"));
+	    		 fileList.add(loadedEquipment);
+	    		 continue;
+	    	 }
+	    	 
+	    	 if (serialNumber.substring(0,2).equals("SB")) {
+	    		 StationaryBike loadedEquipment = new StationaryBike(
+	    				 serialNumber,
+	    				 (String) equipment.get("brand"),
+	    				 (String) equipment.get("model"),
+	    				 (double) equipment.get("equipmentPrice"),
+	    				 (int) equipment.get("resistanceLevels"),
+	    				 (int) equipment.get("height"));
+	    		 fileList.add(loadedEquipment);
+	    		 continue;
+	    	 }
+	    	 
+	    	 throw new IllegalArgumentException("Serial Number did not conform to standard!");
+	     }
+
+	     Map yamlOwner = (Map) yamlAccount.get("owner");
+	     Map yamlAddress = (Map) yamlOwner.get("address");
+	     Address ownerAddress = new Address(
+	    		 String.valueOf(yamlAddress.get("zipcode")),
+	    		 (String) yamlAddress.get("street"),
+	    		 (String) yamlAddress.get("city"),
+	    		 (String) yamlAddress.get("state"));
+	
+	     fileOwner = new Owner(
+	    		 (String) yamlOwner.get("name"),
+	    		 (String) yamlOwner.get("emailAddress"),
+	    		 (String) yamlOwner.get("phoneNumber"),
+	    		 ownerAddress.clone());
+	 } catch(FileNotFoundException fnfe) {
+		 throw new IllegalArgumentException("Account file: '" + fileName + "' could not be found!");
+	 }
 
      // Mapping the account from the YAML file to the Employee class
-     Account account;
-	 try {
-	 	account = om.readValue(file, Account.class);
-	 	this.ID = account.ID;
-	    this.owner = account.owner.clone();
-	    this.accountStatus = account.accountStatus;
-	    this.equipmentList = account.equipmentList;
-	 } catch (IOException e) {
-		throw new InvalidLoadException(fileName, "Could not be loaded because " + e);
-	 }
+	 this.ID = fileID;
+	 this.owner = fileOwner.clone();
+	 this.accountStatus = fileStatus;
+	 this.equipmentList = fileList;
   }
 
-  // get the ID of the account
+// get the ID of the account
   public int getID() {
      return this.ID;
   }

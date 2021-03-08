@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="/Users/zaccappella/Downloads/jackson-dataformat-yaml-2.12.2.jar"/>
 	<classpathentry kind="lib" path="/Users/zaccappella/Downloads/jackson-annotations-2.12.2.jar"/>
 	<classpathentry kind="lib" path="/Users/zaccappella/Downloads/jackson-core-2.12.2.jar"/>
+	<classpathentry kind="lib" path="/Users/zaccappella/Downloads/snakeyaml-1.28.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

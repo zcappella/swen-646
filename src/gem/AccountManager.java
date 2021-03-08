@@ -1,5 +1,12 @@
 package gem;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+
 /**
  * A class to provide the UI with an API to access account information
  *
@@ -7,6 +14,7 @@ package gem;
  */
 
 import java.util.List;
+import java.util.Map;
 
 public class AccountManager {
 
@@ -35,11 +43,24 @@ public class AccountManager {
 
   // load all of the user accounts into a list for management
   private void loadAccounts() {
+	 List<Account> accountList = new ArrayList<>();
+
+     File f = new File(this.accountPath);
+     File fileList[] = f.listFiles();
+     for (File file : fileList) {
+        try {
+            Account account = new Account(String.valueOf(file.getAbsolutePath()));
+            accountList.add(account);
+        } catch(IllegalArgumentException e) {
+            throw new InvalidLoadException(String.valueOf(file.getAbsolutePath()), e.getMessage());
+        }
+     }
+     this.accounts = accountList;
 	  /*
 	   * ensure the account path exists
        * if it doesn't exist, raise InvalidLoadException
        * if it does exist, get all of the accounts in the directory
-       * loop through all of the files that meet the filename convention and call Account contstructor
+       * loop through all of the files that meet the filename convention and call Account constructor
        * throw InvalidLoadException if error is encountered
 	   * set the accounts attribute
 	   */

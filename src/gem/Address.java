@@ -88,9 +88,6 @@ public class Address {
 
   // create and return a copy of the address
   public Address clone() {
-	  /*
-	   * return new Address(this.zipcode, ...)
-	   */
-	  return null;
+	  return new Address(this.zipcode, this.street, this.city, this.state);
   }
 }

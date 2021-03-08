@@ -8,21 +8,21 @@ package gem;
 
 public class Treadmill extends Equipment {
 
-  private float maxSpeed;  // the maximum speed the piece of equipment can reach
+  private double maxSpeed;  // the maximum speed the piece of equipment can reach
   
   // Treadmill constructor
-  public Treadmill(String serialNumber, String brand, String model, double equipPrice, float maxSpeed) {
-	  super(serialNumber, brand, model, equipPrice);
+  public Treadmill(String serialNumber, String brand, String model, double equipPrice, double maxSpeed) {
+      super(serialNumber, brand, model, equipPrice);
 	  
       // validate parameters
-      if (maxSpeed == 0)
+      if (maxSpeed == 0.0)
           throw new IllegalArgumentException("Treadmill values must be non-zero values!");
     
       this.maxSpeed = maxSpeed;
   }
 
   // get the equipment's max speed
-  public float getMaxSpeed() {
+  public double getMaxSpeed() {
      return this.maxSpeed;
   }
   
