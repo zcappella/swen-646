@@ -14,27 +14,32 @@ public class InvalidOperationException extends RuntimeException {
 
   // format the error message into a presentable string
   public String toString() {
-      /*
-       * return "The object with ID " + objectID + " could not be removed because " + errorMsg;
-       */
-     return null;
+     if (this.accountID > 0)
+    	 return this.getClass().getSimpleName() + "The object with ID " + this.objectID + " could not be removed because " + this.errorMsg + ", and the account " + this.accountID + " tried to remove it!";
+     else
+    	return this.getClass().getSimpleName() + "The object with ID " + this.objectID + " could not be removed because " + this.errorMsg;
+        
   }
 
   // InvalidOperationException constructor
   public InvalidOperationException(String objectID, String errorMsg) {
-      /* super();
-       * Validate parameters 
-       * Assign parameter values to attributes 
-       * this.toString()
-       */
+      super();
+      if (objectID == null || objectID.length() == 0 || errorMsg == null || errorMsg.length() == 0)
+          throw new IllegalArgumentException("InvalidOperationException values cannot be null/zero values!");
+      this.objectID = objectID;
+      this.errorMsg = errorMsg;
+      System.out.println(this.toString());
   }
 
   // InvalidOperationException constructor
   public InvalidOperationException(String objectID, String errorMsg, int accountID) {
-      /* super();
-       * Validate parameters 
-       * Assign parameter values to attributes 
-       * this.toString()
-       */
+      super();
+      if (objectID == null || objectID.length() == 0 || errorMsg == null || errorMsg.length() == 0
+              || accountID <= 0)
+          throw new IllegalArgumentException("InvalidOperationException values cannot be null/zero values!");
+      this.objectID = objectID;
+      this.errorMsg = errorMsg;
+      this.accountID = accountID;
+      System.out.println(this.toString());
   }
 }

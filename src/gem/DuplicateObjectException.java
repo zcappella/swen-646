@@ -13,27 +13,28 @@ public class DuplicateObjectException extends RuntimeException {
 
   // format the error message into a presentable string
   public String toString() {
-      /*
-       * return "The object with ID " + objectID + " already exists!"
-       */
-     return null;
+     if (this.accountID > 0)
+    	 return this.getClass().getSimpleName() + "The object with ID " + this.objectID + " already exists, and the account " + this.accountID + " tried to add it!";
+     else
+    	return this.getClass().getSimpleName() + "The object with ID " + this.objectID + " already exists!";
   }
 
   // DuplicateObjectException constructor
   public DuplicateObjectException(String objectID) {
-      /* super();
-       * Validate parameters 
-       * Assign parameter values to attributes 
-       * this.toString()
-       */
+      super();
+      if (objectID == null || objectID.length() == 0)
+          throw new IllegalArgumentException("DuplicateObjectException values cannot be null/zero values!");
+      this.objectID = objectID;
+      System.out.println(this.toString());
   }
 
   // DuplicateObjectException constructor
   public DuplicateObjectException(String objectID, int accountID) {
-      /* super();
-       * Validate parameters 
-       * Assign parameter values to attributes 
-       * this.toString()
-       */
+      super();
+      if (objectID == null || objectID.length() == 0 || accountID <= 0)
+          throw new IllegalArgumentException("DuplicateObjectException values cannot be null/zero values!");
+      this.objectID = objectID;
+      this.accountID = accountID;
+      System.out.println(this.toString());
   }
 }

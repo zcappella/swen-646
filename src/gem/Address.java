@@ -1,6 +1,8 @@
 
 package gem;
 
+import java.util.Map;
+
 /**
  * A class holding the information for an Owner's address
  *
@@ -17,7 +19,24 @@ public class Address {
   public Address(String zipcode, String street, String city, String state) {
 	 // Ensure that none of the params are null or empty strings
      if (street == null || city == null || state == null || zipcode == null
-            || street.length() == 0 || city.length() == 0 || state.length() == 0 || zipcode.length() == 0)
+            || street.length() <= 0 || city.length() <= 0 || state.length() <= 0 || zipcode.length() <= 0)
+            throw new IllegalArgumentException("Address values cannot be null/empty strings!");
+
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
+  }
+
+  // Address constructor
+  public Address(Map yamlContent) {
+     // Ensure that none of the params are null or empty strings
+     street = String.valueOf(yamlContent.get("zipcode"));
+     city = (String) yamlContent.get("street");
+     state = (String) yamlContent.get("city");
+     zipcode = (String) yamlContent.get("state");
+     if (street == null || city == null || state == null || zipcode == null
+            || street.length() <= 0 || city.length() <= 0 || state.length() <= 0 || zipcode.length() <= 0)
             throw new IllegalArgumentException("Address values cannot be null/empty strings!");
 
         this.street = street;
@@ -28,7 +47,7 @@ public class Address {
 
   // set the address's zipcode
   public void setZipcode(String zipcode) {
-     if (zipcode == null || zipcode.length() == 0)
+     if (zipcode == null || zipcode.length() <= 0)
         throw new IllegalArgumentException("Zipcode cannot be null/empty string!");
 
      this.zipcode = zipcode;
@@ -41,7 +60,7 @@ public class Address {
 
   // set the address's street
   public void setStreet(String street) {
-     if (street == null || street.length() == 0)
+     if (street == null || street.length() <= 0)
         throw new IllegalArgumentException("Street cannot be null/empty string!");
 
      this.street = street;
@@ -54,7 +73,7 @@ public class Address {
 
   // set the address's city
   public void setCity(String city) {
-     if (city == null || city.length() == 0)
+     if (city == null || city.length() <= 0)
         throw new IllegalArgumentException("City cannot be null/empty string!");
 
      this.city = city;
@@ -67,7 +86,7 @@ public class Address {
 
   // set the address's state
   public void setState(String state) {
-     if (state == null || state.length() == 0)
+     if (state == null || state.length() <= 0)
         throw new IllegalArgumentException("State cannot be null/empty string!");
 
      this.state = state;

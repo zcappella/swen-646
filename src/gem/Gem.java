@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class Gem {
-    public static String accountPath = "/Users/zaccappella/eclipse-workspace/SWEN-646 Project/src/accounts";
+    public static String accountPath = "/Users/zaccappella/eclipse-workspace/SWEN-646 Project/src/accounts/";
 
     /**
      * @param args - command-line arguments

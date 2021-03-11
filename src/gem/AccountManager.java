@@ -46,6 +46,8 @@ public class AccountManager {
 	 List<Account> accountList = new ArrayList<>();
 
      File f = new File(this.accountPath);
+     if (!f.exists())
+        throw new InvalidLoadException(this.accountPath, "Account directory does not exist!");
      File fileList[] = f.listFiles();
      if (fileList.length == 0)
      	this.accounts = new ArrayList<>();
@@ -62,14 +64,6 @@ public class AccountManager {
 	     }
 	     this.accounts = accountList;
      }
-	  /*
-	   * ensure the account path exists
-       * if it doesn't exist, raise InvalidLoadException
-       * if it does exist, get all of the accounts in the directory
-       * loop through all of the files that meet the filename convention and call Account constructor
-       * throw InvalidLoadException if error is encountered
-	   * set the accounts attribute
-	   */
   }
 
   //save the account information to a YAML file

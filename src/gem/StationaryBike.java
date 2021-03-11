@@ -1,5 +1,7 @@
 package gem;
 
+import java.util.Map;
+
 /**
  * A class holding the information for a stationary bike
  *
@@ -16,7 +18,24 @@ public class StationaryBike extends Equipment {
 	  super(serialNumber, brand, model, equipPrice);
 	  
       // validate parameters
-      if (resistanceLevels == 0 || height == 0)
+      if (resistanceLevels <= 0 || height <= 0)
+          throw new IllegalArgumentException("Stationary Bike values must be non-zero values!");
+    
+      this.resistanceLevels = resistanceLevels;
+      this.height = height;
+  }
+
+  // Stationary Bike constructor
+  public StationaryBike(Map yamlContent) {
+      super((String) yamlContent.get("serialNumber"),
+            (String) yamlContent.get("brand"),
+            (String) yamlContent.get("model"),
+            (double) yamlContent.get("equipmentPrice"));
+      
+      resistanceLevels = (int) yamlContent.get("resistanceLevels");
+      height = (int) yamlContent.get("height");
+      // validate parameters
+      if (resistanceLevels <= 0 || height <= 0)
           throw new IllegalArgumentException("Stationary Bike values must be non-zero values!");
     
       this.resistanceLevels = resistanceLevels;

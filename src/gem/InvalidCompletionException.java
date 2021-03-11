@@ -14,18 +14,18 @@ public class InvalidCompletionException extends RuntimeException {
 
   // format the error message into a presentable string
   public String toString() {
-      /*
-       * return "The transaction for equipment ID " + this.equipmentID + ", with account ID, " + this.accountID + ", could not be completed because " + this.errorMsg;
-       */
-     return null;
+      return this.getClass().getSimpleName() + "The transaction for equipment ID " + this.equipmentID + ", with account ID, " + this.accountID + ", could not be completed because " + this.errorMsg;
   }
 
   // InvalidCompletionException constructor
   public InvalidCompletionException(String equipmentID, String errorMsg, int accountID) {
-      /* super();
-       * Validate parameters 
-       * Assign parameter values to attributes 
-       * this.toString()
-       */
+      super();
+      if (equipmentID == null || equipmentID.length() == 0 || errorMsg == null || errorMsg.length() == 0
+              || accountID <= 0)
+          throw new IllegalArgumentException("InvalidCompletionException values cannot be null/zero values!");
+      this.equipmentID = equipmentID;
+      this.errorMsg = errorMsg;
+      this.accountID = accountID;
+      System.out.println(this.toString());
   }
 }

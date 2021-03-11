@@ -19,7 +19,7 @@ public abstract class Equipment {
   public Equipment(String serialNumber, String brand, String model, double equipPrice) {
       // validate parameters
       if (serialNumber == null || serialNumber.length() == 0 || brand == null || brand.length() == 0
-              || model == null || model.length() == 0 || equipPrice == 0)
+              || model == null || model.length() == 0 || equipPrice <= 0)
           throw new IllegalArgumentException("Equipment values cannot be null/zero values!");
 
       this.serialNumber = serialNumber;

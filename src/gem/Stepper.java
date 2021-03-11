@@ -1,5 +1,7 @@
 package gem;
 
+import java.util.Map;
+
 /**
  * A class holding the information for a stepper machine
  *
@@ -16,7 +18,24 @@ public class Stepper extends Equipment {
 	  super(serialNumber, brand, model, equipPrice);
 	  
       // validate parameters
-      if (height == 0)
+      if (height <= 0)
+          throw new IllegalArgumentException("Stepper values must be non-zero values!");
+    
+      this.heartMonitor = heartMon;
+      this.height = height;
+  }
+
+  // Stepper constructor
+  public Stepper(Map yamlContent) {
+      super((String) yamlContent.get("serialNumber"),
+            (String) yamlContent.get("brand"),
+            (String) yamlContent.get("model"),
+            (double) yamlContent.get("equipmentPrice"));
+      
+      boolean heartMon = (boolean) yamlContent.get("heartMonitor");
+      height = (int) yamlContent.get("height");
+      // validate parameters
+      if (height <= 0)
           throw new IllegalArgumentException("Stepper values must be non-zero values!");
     
       this.heartMonitor = heartMon;

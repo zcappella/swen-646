@@ -1,9 +1,7 @@
 package gem;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,8 +30,7 @@ public class Account {
      this.ID = ID;
      this.owner = owner.clone();
      this.accountStatus = 0;
-     List<Equipment> emptyList = new ArrayList<>();
-     this.equipmentList = emptyList;
+     this.equipmentList = new ArrayList<>();
   }
 
   // Account constructor
@@ -61,36 +58,19 @@ public class Account {
 	     for (Map equipment : yamlEquipment) {
 	    	 String serialNumber = (String) equipment.get("serialNumber");
 	    	 if (serialNumber.substring(0,2).equals("TH")) {
-	    		 Treadmill loadedEquipment = new Treadmill(
-	    				 serialNumber,
-	    				 (String) equipment.get("brand"),
-	    				 (String) equipment.get("model"),
-	    				 (double) equipment.get("equipmentPrice"),
-	    				 (double) equipment.get("maxSpeed"));
+	    		 Treadmill loadedEquipment = new Treadmill(equipment);
 	    		 fileList.add(loadedEquipment);
 	    		 continue;
 	    	 }
 	    	 
 	    	 if (serialNumber.substring(0,2).equals("ST")) {
-	    		 Stepper loadedEquipment = new Stepper(
-	    				 serialNumber,
-	    				 (String) equipment.get("brand"),
-	    				 (String) equipment.get("model"),
-	    				 (double) equipment.get("equipmentPrice"),
-	    				 (boolean) equipment.get("heartMonitor"),
-	    				 (int) equipment.get("height"));
+	    		 Stepper loadedEquipment = new Stepper(equipment);
 	    		 fileList.add(loadedEquipment);
 	    		 continue;
 	    	 }
 	    	 
 	    	 if (serialNumber.substring(0,2).equals("SB")) {
-	    		 StationaryBike loadedEquipment = new StationaryBike(
-	    				 serialNumber,
-	    				 (String) equipment.get("brand"),
-	    				 (String) equipment.get("model"),
-	    				 (double) equipment.get("equipmentPrice"),
-	    				 (int) equipment.get("resistanceLevels"),
-	    				 (int) equipment.get("height"));
+	    		 StationaryBike loadedEquipment = new StationaryBike(equipment);
 	    		 fileList.add(loadedEquipment);
 	    		 continue;
 	    	 }
@@ -98,19 +78,11 @@ public class Account {
 	    	 throw new IllegalArgumentException("Serial Number did not conform to standard!");
 	     }
 
-	     Map yamlOwner = (Map) yamlAccount.get("owner");
-	     Map yamlAddress = (Map) yamlOwner.get("address");
-	     Address ownerAddress = new Address(
-	    		 String.valueOf(yamlAddress.get("zipcode")),
-	    		 (String) yamlAddress.get("street"),
-	    		 (String) yamlAddress.get("city"),
-	    		 (String) yamlAddress.get("state"));
+	     Address ownerAddress = new Address((Map) ((Map) yamlAccount.get("owner")).get("address"));
 	
 	     fileOwner = new Owner(
-	    		 (String) yamlOwner.get("name"),
-	    		 (String) yamlOwner.get("emailAddress"),
-	    		 (String) yamlOwner.get("phoneNumber"),
-	    		 ownerAddress.clone());
+                (Map) yamlAccount.get("owner"),
+	    		ownerAddress.clone());
 	 } catch(FileNotFoundException fnfe) {
 		 throw new IllegalArgumentException("Account file: '" + fileName + "' could not be found!");
 	 }

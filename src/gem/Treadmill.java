@@ -1,5 +1,7 @@
 package gem;
 
+import java.util.Map;
+
 /**
  * A class holding the information for a treadmill
  *
@@ -15,7 +17,22 @@ public class Treadmill extends Equipment {
       super(serialNumber, brand, model, equipPrice);
 	  
       // validate parameters
-      if (maxSpeed == 0.0)
+      if (maxSpeed <= 0.0)
+          throw new IllegalArgumentException("Treadmill values must be non-zero values!");
+    
+      this.maxSpeed = maxSpeed;
+  }
+
+  // Treadmill constructor
+  public Treadmill(Map yamlContent) {
+      super((String) yamlContent.get("serialNumber"),
+            (String) yamlContent.get("brand"),
+            (String) yamlContent.get("model"),
+            (double) yamlContent.get("equipmentPrice"));
+      
+      maxSpeed = (double) yamlContent.get("maxSpeed");
+      // validate parameters
+      if (maxSpeed <= 0.0)
           throw new IllegalArgumentException("Treadmill values must be non-zero values!");
     
       this.maxSpeed = maxSpeed;
