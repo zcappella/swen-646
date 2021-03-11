@@ -17,8 +17,8 @@ public class Owner {
   // Owner constructor
   public Owner(String name, String emailAddress, String phoneNumber, Address address) {
 	  // validate parameters
-      if (name == null || name.length() <= 0 || emailAddress == null || emailAddress.length() <= 0
-              || phoneNumber == null || phoneNumber.length() <= 0 || address == null)
+      if (name == null || name.length() == 0 || emailAddress == null || emailAddress.length() == 0
+              || phoneNumber == null || phoneNumber.length() == 0 || address == null)
           throw new IllegalArgumentException("Owner values cannot be null/zero values!");
 
       this.name = name;
@@ -34,8 +34,8 @@ public class Owner {
       phoneNumber = (String) yamlContent.get("phoneNumber");
       address = address;
       // validate parameters
-      if (name == null || name.length() <= 0 || emailAddress == null || emailAddress.length() <= 0
-              || phoneNumber == null || phoneNumber.length() <= 0 || address == null)
+      if (name == null || name.length() == 0 || emailAddress == null || emailAddress.length() == 0
+              || phoneNumber == null || phoneNumber.length() == 0 || address == null)
           throw new IllegalArgumentException("Owner values cannot be null/zero values!");
 
       this.name = name;
@@ -98,14 +98,18 @@ public class Owner {
 
   // format the owner's information into a presentable string
   public String toString() {
-	  /*
-	   * return "<name>" + "<emailAddress>" + "phoneNumber" + "Address.toString()"
-	   */
-	  return null;
+	  return this.name + " : " +
+             this.emailAddress + " : " +
+             this.phoneNumber + " : " +
+             this.address.toString();
   }
 
   // create and return a copy of the owner information
   public Owner clone() {
-	  return new Owner(this.name, this.emailAddress, this.phoneNumber, this.address);
+	  return new Owner(
+            this.name,
+            this.emailAddress,
+            this.phoneNumber,
+            this.address);
   }
 }

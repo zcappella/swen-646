@@ -13,7 +13,11 @@ public class InvalidEquipmentException extends RuntimeException {
 
   // format the error message into a presentable string
   public String toString() {
-      return this.getClass().getSimpleName() + "The equipment data " + equipmentData + " is not properly formatted because " + errorMsg;
+      return this.getClass().getSimpleName() +
+             " The equipment data " +
+             equipmentData +
+             " is not properly formatted because " +
+             errorMsg;
   }
 
   // InvalidEquipmentException constructor

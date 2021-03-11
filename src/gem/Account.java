@@ -171,4 +171,11 @@ public class Account {
         * change account status to inactive
         */
   }
+
+  // create and return a copy of the Account object
+  public Account clone() {
+      return new Account(
+        this.ID,
+        this.owner.clone());
+  }
 }

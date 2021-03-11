@@ -79,6 +79,7 @@ public class Gem {
         System.out.println("Address Street: " + address.getStreet());
         System.out.println("Address City: " + address.getCity());
         System.out.println("Address State: " + address.getState());
+        System.out.println("To String Method: " + address.toString());
         System.out.println("-----------------------------------------");
 
         System.out.println("\n");
@@ -98,10 +99,8 @@ public class Gem {
         System.out.println("Owner Name: " + owner.getName());
         System.out.println("Owner Email Address: " + owner.getEmailAddress());
         System.out.println("Owner Phone Number: " + owner.getPhoneNumber());
-        System.out.println("Owner Zipcode: " + owner.getAddress().getZipcode());
-        System.out.println("Owner Street: " + owner.getAddress().getStreet());
-        System.out.println("Owner City: " + owner.getAddress().getCity());
-        System.out.println("Owner State: " + owner.getAddress().getState());
+        System.out.println("Owner Address: " + owner.getAddress().toString());
+        System.out.println("To String Method: " + owner.toString());
         System.out.println("-----------------------------------------");
 
     	System.out.println("\n");
@@ -123,12 +122,8 @@ public class Gem {
             System.out.println("Account Equipment List is empty");
         else
             throw new InvalidOperationException(String.valueOf(account.getID()), "Account created with non-emtpy equipment list.");
-        System.out.println("Account Owner Email Address: " + account.getOwner().getEmailAddress());
-        System.out.println("Account Owner Phone Number: " + account.getOwner().getPhoneNumber());
-        System.out.println("Account Owner Zipcode: " + account.getOwner().getAddress().getZipcode());
-        System.out.println("Account Owner Street: " + account.getOwner().getAddress().getStreet());
-        System.out.println("Account Owner City: " + account.getOwner().getAddress().getCity());
-        System.out.println("Account Owner State: " + account.getOwner().getAddress().getState());
+        System.out.println("Account Owner Information: " + account.getOwner().toString());
+        System.out.println("To String Method: " + account.toString());
         System.out.println("-----------------------------------------");
 
     	System.out.println("\n");
@@ -152,6 +147,7 @@ public class Gem {
         System.out.println("Treadmill Model: " + treadmill.getModel());
         System.out.println("Treadmill Equipment Price: " + String.valueOf(treadmill.getEquipmentPrice()));
         System.out.println("Treadmill Max Speed: " + treadmill.getMaxSpeed());
+        System.out.println("To String Method: " + treadmill.toString());
         System.out.println("-----------------------------------------");
         System.out.println("\n");
 
@@ -170,6 +166,7 @@ public class Gem {
         System.out.println("Stepper Equipment Price: " + String.valueOf(stepper.getEquipmentPrice()));
         System.out.println("Stepper Heart Monitor: " + String.valueOf(stepper.getHeartMonitor()));
         System.out.println("Stepper Height: " + String.valueOf(stepper.getHeight()));
+        System.out.println("To String Method: " + stepper.toString());
         System.out.println("-----------------------------------------");
         System.out.println("\n");
 
@@ -187,6 +184,7 @@ public class Gem {
         System.out.println("Stationary Bike Equipment Price: " + String.valueOf(sb.getEquipmentPrice()));
         System.out.println("Stationary Bike Resistance Levels: " + String.valueOf(sb.getResistanceLevels()));
         System.out.println("Stationary Bike Height: " + String.valueOf(sb.getHeight()));
+        System.out.println("To String Method: " + sb.toString());
         System.out.println("-----------------------------------------");
 
     	System.out.println("\n");

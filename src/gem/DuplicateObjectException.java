@@ -14,9 +14,17 @@ public class DuplicateObjectException extends RuntimeException {
   // format the error message into a presentable string
   public String toString() {
      if (this.accountID > 0)
-    	 return this.getClass().getSimpleName() + "The object with ID " + this.objectID + " already exists, and the account " + this.accountID + " tried to add it!";
+    	 return this.getClass().getSimpleName() +
+                "The object with ID " +
+                this.objectID +
+                " already exists, and the account "+
+                this.accountID +
+                " tried to add it!";
      else
-    	return this.getClass().getSimpleName() + "The object with ID " + this.objectID + " already exists!";
+    	return this.getClass().getSimpleName() +
+               "The object with ID " +
+               this.objectID +
+               " already exists!";
   }
 
   // DuplicateObjectException constructor

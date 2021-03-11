@@ -62,17 +62,19 @@ public class StationaryBike extends Equipment {
   
   // format the stationary bike's information into a presentable string
   public String toString() {
-	  /*
-	   * return super.toString() + "<resistanceLevels>" + "<height>"
-	   */
-	  return null;
+      return super.toString() + " : " +
+             String.valueOf(this.resistanceLevels) + " : " +
+             String.valueOf(this.height);
   }
 
   // create and return a copy of the stationary bike object
   public StationaryBike clone() {
-	  /*
-	   * return new StationaryBike(this.serialNumber, ...)
-	   */
-	  return null;
+	  return new StationaryBike(
+        this.serialNumber,
+        this.brand,
+        this.model,
+        this.equipmentPrice,
+        this.resistanceLevels,
+        this.height);
   }
 }

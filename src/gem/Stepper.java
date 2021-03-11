@@ -62,17 +62,19 @@ public class Stepper extends Equipment {
   
  // format the stepper's information into a presentable string
  public String toString() {
-	  /*
-	   * return super.toString() + "<heartMonitor>" + "<height>"
-	   */
-	  return null;
+	  return super.toString() + " : " +
+             String.valueOf(this.heartMonitor) + " : " +
+             String.valueOf(this.height);
  }
 
   // create and return a copy of the stepper object
   public Stepper clone() {
-	  /*
-	   * return new Stepper(this.serialNumber, ...)
-	   */
-	  return null;
+	  return new Stepper(
+        this.serialNumber,
+        this.brand,
+        this.model,
+        this.equipmentPrice,
+        this.heartMonitor,
+        this.height);
   }
 }

@@ -14,7 +14,13 @@ public class InvalidCompletionException extends RuntimeException {
 
   // format the error message into a presentable string
   public String toString() {
-      return this.getClass().getSimpleName() + "The transaction for equipment ID " + this.equipmentID + ", with account ID, " + this.accountID + ", could not be completed because " + this.errorMsg;
+      return this.getClass().getSimpleName() +
+             " The transaction for equipment ID " +
+             this.equipmentID +
+             ", with account ID, " +
+             this.accountID +
+             ", could not be completed because " +
+             this.errorMsg;
   }
 
   // InvalidCompletionException constructor

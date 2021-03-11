@@ -15,9 +15,20 @@ public class InvalidOperationException extends RuntimeException {
   // format the error message into a presentable string
   public String toString() {
      if (this.accountID > 0)
-    	 return this.getClass().getSimpleName() + "The object with ID " + this.objectID + " could not be removed because " + this.errorMsg + ", and the account " + this.accountID + " tried to remove it!";
+    	 return this.getClass().getSimpleName() +
+                "The object with ID " +
+                this.objectID +
+                " could not be removed because " +
+                this.errorMsg +
+                ", and the account " +
+                this.accountID +
+                " tried to remove it!";
      else
-    	return this.getClass().getSimpleName() + "The object with ID " + this.objectID + " could not be removed because " + this.errorMsg;
+    	return this.getClass().getSimpleName() +
+               "The object with ID " +
+               this.objectID +
+               " could not be removed because " +
+               this.errorMsg;
         
   }
 

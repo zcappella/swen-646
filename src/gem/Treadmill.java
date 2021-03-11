@@ -45,17 +45,17 @@ public class Treadmill extends Equipment {
   
   // format the treadmill's information into a presentable string
   public String toString() {
-	  /*
-	   * return super.toString() + "<maxSpeed>"
-	   */
-	  return null;
+	  return super.toString() + " : " +
+             String.valueOf(this.maxSpeed);
   }
  
   // create and return a copy of the treadmill object
   public Treadmill clone() {
-	  /*
-	   * return new Treadmill(this.serialNumber, ...)
-	   */
-	  return null;
+	  return new Treadmill(
+        this.serialNumber,
+        this.brand,
+        this.model,
+        this.equipmentPrice,
+        this.maxSpeed);
   }
 }

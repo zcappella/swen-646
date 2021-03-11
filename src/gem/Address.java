@@ -99,14 +99,18 @@ public class Address {
 
   // format the address into a presentable string
   public String toString() {
-	  /*
-	   * return "<zipcode>" + "<street>" + "<city>" + "<state>"
-	   */
-	  return null;
+	  return this.zipcode + " : " +
+             this.street + " : " +
+             this.city + " : " +
+             this.state;
   }
 
   // create and return a copy of the address
   public Address clone() {
-	  return new Address(this.zipcode, this.street, this.city, this.state);
+	  return new Address(
+            this.zipcode,
+            this.street,
+            this.city,
+            this.state);
   }
 }

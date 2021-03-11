@@ -98,10 +98,12 @@ public abstract class Equipment {
   
   // format the equipment's information into a presentable string
   public String toString() {
-	  /*
-	   * return "<serialNumber>" + "<brand>" + "<model>" + "<equipmentPrice>" + "<transactionPrice>" + "<status>"
-	   */
-	  return null;
+	  return this.serialNumber + " : " +
+             this.brand + " : " +
+             this.model + " : " +
+             String.valueOf(this.equipmentPrice) + " : " +
+             String.valueOf(this.transactionPrice) + " : " +
+             String.valueOf(this.status);
   }
   
   // create and return a copy of the equipment object

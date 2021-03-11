@@ -13,7 +13,11 @@ public class InvalidLoadException extends RuntimeException {
 
   // format the error message into a presentable string
   public String toString() {
-      return this.getClass().getSimpleName() + "The account with file name " + this.fileName + " could not be loaded because " + this.errorMsg;
+      return this.getClass().getSimpleName() +
+             " The account with file name " +
+             this.fileName +
+             " could not be loaded because " +
+             this.errorMsg;
   }
 
   // InvalidLoadException constructor
