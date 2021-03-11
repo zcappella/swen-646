@@ -106,20 +106,24 @@ public class Account {
 
   // get the list of equipment associated to the account
   public List<Equipment> getEquipmentList() {
-     return this.equipmentList;
+     List<Equipment> equipmentList = new ArrayList<>();
+     for (Equipment equipment : this.equipmentList) {
+        equipmentList.add(equipment.clone());
+     }
+     return equipmentList;
   }
 
   // get the account owner
   public Owner getOwner() {
-     return this.owner;
+     return this.owner.clone();
   }
 
   // set the owner of the account
   public void setOwner(Owner owner) {
-      /*
-       * if account is inactive, throw InvalidOperationException
-       * set the Owner to the object's clone
-       */
+      if (this.accountStatus == 1)
+            throw new InvalidOperationException(owner.getName(), "Account is inactive", this.ID);
+      
+      this.owner = owner.clone();
   }
   
   // add equipment to the account

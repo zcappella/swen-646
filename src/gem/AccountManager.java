@@ -38,7 +38,11 @@ public class AccountManager {
 
   // get the list of all the accounts
   public List<Account> getAccounts() {
-     return this.accounts;
+     List<Account> accountList = new ArrayList<>();
+     for (Account account : this.accounts) {
+        accountList.add(account.clone());
+     }
+     return accountList;
   }
 
   // load all of the user accounts into a list for management
