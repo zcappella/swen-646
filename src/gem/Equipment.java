@@ -1,5 +1,8 @@
 package gem;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A abstract class for implementing all common equipment-related activities and attributes
  *
@@ -78,7 +81,7 @@ public abstract class Equipment {
   }
 
   // complete an equipment transaction
-  public void completeTransaction(int status) {
+  public double completeTransaction(int status) {
       /*
        * throw InvalidCompletionException if status is not set
        * throw InvalidCompletionException if transaction is already completed
@@ -86,6 +89,7 @@ public abstract class Equipment {
        * set the transaction price by calling calculateTransactionPrice
        * throw InvalidCompletionException if error is encountered
        */
+	  return 0.0;
   }
 
   // set the status of a given piece of equipment and return whether the action was successful
@@ -104,6 +108,18 @@ public abstract class Equipment {
              String.valueOf(this.equipmentPrice) + " : " +
              String.valueOf(this.transactionPrice) + " : " +
              String.valueOf(this.status);
+  }
+
+  // format the equipment's information into a YAML format
+  public Map generateFileContent() {
+     Map<String, Object> data = new HashMap<String, Object>();
+     data.put("serialNumber", this.serialNumber);
+     data.put("brand", this.brand);
+     data.put("model", this.model);
+     data.put("equipmentPrice", this.equipmentPrice);
+     data.put("transactionPrice", this.transactionPrice);
+     data.put("status", this.status);
+     return data;
   }
   
   // create and return a copy of the equipment object

@@ -1,6 +1,7 @@
 
 package gem;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -103,6 +104,16 @@ public class Address {
              this.street + " : " +
              this.city + " : " +
              this.state;
+  }
+
+  // format the equipment's information into a YAML format
+  public Map generateFileContent() {
+     Map<String, Object> data = new HashMap<String, Object>();
+     data.put("zipcode", this.zipcode);
+     data.put("street", this.street);
+     data.put("city", this.city);
+     data.put("state", this.state);
+     return data;
   }
 
   // create and return a copy of the address

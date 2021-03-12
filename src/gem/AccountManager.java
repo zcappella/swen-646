@@ -1,11 +1,10 @@
 package gem;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A class to provide the UI with an API to access account information
@@ -15,6 +14,9 @@ import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Map;
+
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.nodes.Tag;
 
 public class AccountManager {
 
@@ -70,109 +72,165 @@ public class AccountManager {
      }
   }
 
-  //save the account information to a YAML file
-  private void saveToFile(String fileName, Account account) {
-     /*
-       * verify the account exists
-       * if not, throw IllegalArgumentException
-       * if the file exists, overwrite it
-       * if the file does not exist, create it
-       * write out account in YAML format as key: value pairs
-       * iterate through equipment list
-       * call toString() for each equipment object and write the data to file
-       * close file
-       * catch any errors that may occur
-       */
+  // save the account information to a YAML file
+  private void saveToFile(Account account) {
+     // Ensure that none of the params are null or zero values
+     if (account == null)
+            throw new IllegalArgumentException("Account cannot be null!");
+
+     String fileName = "";
+     if (this.accountPath.endsWith("/"))
+            fileName = "account-" + String.valueOf(account.getID()) + ".yaml";
+     else
+            fileName = "/account-" + String.valueOf(account.getID()) + ".yaml";
+     File f = new File(this.accountPath + fileName);
+     if (f.exists()) {
+        System.out.println("Account file already exists, removing it and replacing it.");
+        if (f.delete())
+            System.out.println("Deleted account file: " + String.valueOf(account.getID()));
+        else
+            throw new InvalidOperationException(String.valueOf(account.getID()),
+                                                    "Could not delete account file!");
+     }
+     else
+		try {
+			f.createNewFile();
+		} catch (IOException e) {
+			throw new InvalidOperationException(String.valueOf(account.getID()),
+                                                "Could not create account file!");
+		}
+
+     Map<String, Object> data = account.generateFileContent();
+     Yaml yaml = new Yaml();
+     FileWriter writer;
+	 try {
+		 writer = new FileWriter(this.accountPath + fileName);
+		 yaml.dump(data, writer);
+	 } catch (IOException e) {
+		 throw new InvalidOperationException(String.valueOf(account.getID()),
+                 							 "Could not write account file!");
+	 }
   }
 
   // add equipment to a given account
   public void addEquipmentToAccount(int accountID, Equipment equipment) {
-	  /*
-	   * validate parameters
-	   * find the account in the list of accounts
-	   * if not found, throw IllegalArgumentException 
-	   *
-       * call account object's addEquipment function
-       *
-       * update the account file
-	   */
+     // Ensure that none of the params are null or zero values
+     if (equipment == null || accountID <= 0)
+            throw new IllegalArgumentException("Account and Equipment values cannot be null/zero values!");
+
+     for (Account account : this.accounts) {
+        if (account.getID() == accountID)
+        {
+            account.addEquipment(equipment.clone());
+            saveToFile(account);
+        }
+     }
+     throw new IllegalArgumentException("Account '" +
+                                        String.valueOf(accountID) +
+                                        "' does not exist!");
   }
 
   // remove equipment from a given account
   public void removeEquipmentFromAccount(int accountID, String serialNumber) {
-	  /*
-	   * validate parameters
-	   * find the account in the list of accounts
-	   * if not found, throw IllegalArgumentException 
-	   *
-       * call account object's removeEquipment function
-       *
-       * update the account file
-	   */
+	 // Ensure that none of the params are null or zero values
+     if (serialNumber == null || serialNumber.length() ==0 || accountID <= 0)
+            throw new IllegalArgumentException("Account and serial number values cannot be null/zero values!");
+
+     for (Account account : this.accounts) {
+        if (account.getID() == accountID)
+        {
+            account.removeEquipment(serialNumber);
+            saveToFile(account);
+        }
+     }
+     throw new IllegalArgumentException("Account '" +
+                                        String.valueOf(accountID) +
+                                        "' does not exist!");
   }
 
   // change an account from active to inactive
-  public Account deactivateAccount(int accountID) {
-	  /*
-	   * validate parameters
-	   * find the account in the list of accounts
-	   * if not found, throw IllegalArgumentException 
-	   * if found, call the account's deactivate function
-       *
-       * update the account file
-	   */
-	  return null;
+  public void deactivateAccount(int accountID) {
+     // Ensure that none of the params are null or zero values
+     if (accountID <= 0)
+            throw new IllegalArgumentException("Account ID cannot be a zero value!");
+
+     for (Account account : this.accounts) {
+        if (account.getID() == accountID)
+        {
+            account.deactivateAccount();
+            saveToFile(account);
+        }
+     }
+     throw new IllegalArgumentException("Account '" +
+                                        String.valueOf(accountID) +
+                                        "' does not exist!");
   }
 
   // complete a transaction for a given account based on the equipment
-  public Double completeTransactionForAccount(int accountID, String serialNumber, int status) {
-	  /*
-	   * validate parameters
-	   * find the account in the list of accounts
-	   * if not found, throw IllegalArgumentException 
-	   *
-       * call account object's completeTransaction function
-       *
-       * update the account file
-	   */
-	  return null;
+  public void completeTransactionForAccount(int accountID, String serialNumber, int status) {
+     // Ensure that none of the params are null or zero values
+     if (accountID <= 0 || serialNumber == null || serialNumber.length() == 0 || status <= 0)
+            throw new IllegalArgumentException("Account and equipment values cannot be a null/zero values!");
+
+     for (Account account : this.accounts) {
+        if (account.getID() == accountID)
+        {
+            account.completeTransaction(serialNumber, status);
+            saveToFile(account);
+        }
+     }
+     throw new IllegalArgumentException("Account '" +
+                                        String.valueOf(accountID) +
+                                        "' does not exist!");
   }
 
   // add a new account
   public void addAccount(Account account) {
-	  /*
-	   * validate parameters
-	   * look for the account in the list of accounts
-	   * if duplicate found, throw DuplicateObjectException
-	   * if not found, create the account by cloning the Account object
-       *
-       * update the account file
-	   */
-  }
+     // Ensure that none of the params are null or zero values
+     if (account == null)
+            throw new IllegalArgumentException("Account cannot be null!");
 
-  // add a new account
-  public void addAccount(String fileName) {
-      /*
-       * validate parameters
-       * look for the account in account file location
-       * if duplicate found, throw DuplicateObjectException
-       * if not found, call Account(filename)
-       *
-       * addAccount(Account)
-       */
+     for (Account act : this.accounts) {
+        if (act.getID() == account.getID())
+            throw new DuplicateObjectException(String.valueOf(account.getID()));
+     }
+
+     this.accounts.add(account.clone());
+     saveToFile(account);
   }
 
   // remove a given account
   public void removeAccount(int accountID) {
-	  /*
-	   * validate parameters
-       * if parameters are invalid, throw IllegalArgumentException
-	   * find the account in the list of accounts
-	   * if not found, throw IllegalArgumentException
-       * if account has completed transaction, throw InvalidOperationException
-	   * if found, delete the account
-       *
-       * remove the account file
-	   */
+     // Ensure that none of the params are null or zero values
+     if (accountID <= 0)
+            throw new IllegalArgumentException("Account ID cannot be zero!");
+
+     boolean found_flag = false;
+     for (Account account : this.accounts) {
+        if (account.getID() == accountID) {
+            for (Equipment equipment : account.getEquipmentList()) {
+                if (equipment.getStatus() == 1 || equipment.getStatus() == 2)
+                    throw new InvalidOperationException(String.valueOf(account.getID()),
+                                                        "Accounts with completed transactions cannot be deleted!");
+            }
+            this.accounts.remove(account);
+            String fileName = "";
+            if (this.accountPath.endsWith("/"))
+                    fileName = "account-" + String.valueOf(account.getID()) + ".yaml";
+            else
+                    fileName = "/account-" + String.valueOf(account.getID()) + ".yaml";
+            File f = new File(this.accountPath + fileName);
+            if (f.delete())
+                System.out.println("Deleted account file: " + String.valueOf(account.getID()));
+            else
+                throw new InvalidOperationException(String.valueOf(account.getID()),
+                                                    "Could not delete account file!");
+
+            found_flag = true;
+            break;
+        }
+     }
+     if (!found_flag)
+        throw new IllegalArgumentException("Account does not exist!");
   }
 }

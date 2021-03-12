@@ -67,6 +67,14 @@ public class StationaryBike extends Equipment {
              String.valueOf(this.height);
   }
 
+  // format the equipment's information into a YAML format
+  public Map generateFileContent() {
+     Map<String, Object> data = super.generateFileContent();
+     data.put("resistanceLevels", this.resistanceLevels);
+     data.put("height", this.height);
+     return data;
+  }
+
   // create and return a copy of the stationary bike object
   public StationaryBike clone() {
 	  return new StationaryBike(

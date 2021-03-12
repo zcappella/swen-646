@@ -67,6 +67,14 @@ public class Stepper extends Equipment {
              String.valueOf(this.height);
  }
 
+ // format the equipment's information into a YAML format
+  public Map generateFileContent() {
+     Map<String, Object> data = super.generateFileContent();
+     data.put("heartMonitor", this.heartMonitor);
+     data.put("height", this.height);
+     return data;
+  }
+
   // create and return a copy of the stepper object
   public Stepper clone() {
 	  return new Stepper(

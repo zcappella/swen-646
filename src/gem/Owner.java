@@ -1,5 +1,6 @@
 package gem;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -102,6 +103,16 @@ public class Owner {
              this.emailAddress + " : " +
              this.phoneNumber + " : " +
              this.address.toString();
+  }
+
+  // format the equipment's information into a YAML format
+  public Map generateFileContent() {
+     Map<String, Object> data = new HashMap<String, Object>();
+     data.put("name", this.name);
+     data.put("emailAddress", this.emailAddress);
+     data.put("phoneNumber", this.phoneNumber);
+     data.put("address", this.address.generateFileContent());
+     return data;
   }
 
   // create and return a copy of the owner information

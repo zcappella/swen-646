@@ -26,6 +26,7 @@ public class Gem {
         testScenario3();
         testScenario4();
         testScenario5();
+        testScenario6();
     }
     
     /*
@@ -188,5 +189,24 @@ public class Gem {
         System.out.println("-----------------------------------------");
 
     	System.out.println("\n");
+    }
+
+    /*
+     * Create a new Account object and save to a file
+     */
+    public static void testScenario6() {
+        System.out.println("Test Scenario #6:");
+        AccountManager am = new AccountManager(accountPath);
+        
+        List<Account> accountList = am.getAccounts();
+        int accountCount = 1;
+        for (Account account : accountList) {
+            accountCount++;
+        }
+        Account account = new Account(accountCount++, generateOwnerStub().clone());
+        am.addAccount(account);
+        System.out.println("Successfully wrote new account file.");
+        am.removeAccount(account.getID());
+        System.out.println("\n");
     }
 }

@@ -3,6 +3,7 @@ package gem;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -128,48 +129,89 @@ public class Account {
   
   // add equipment to the account
   public void addEquipment(Equipment equipment) {
-      /*
-       * validate parameters
-       * if account is inactive, throw throw InvalidOperationException
-       * if serial number has completed transaction, throw IllegalArgumentException
-       * check that the account doesn't have the given piece of equipment
-       * if not found, add the equipment by cloning it to the account's equipment list
-       * if found, throw the DuplicateObjectException
-       */
+      if (equipment == null)
+            throw new IllegalArgumentException("Equipment object was null!");
+
+      if (this.accountStatus == 1)
+            throw new InvalidOperationException(equipment.getSerialNumber(),
+                                                "Inactive accounts cannot add new equipment objects",
+                                                this.ID);
+
+      if (equipment.status == 1 || equipment.status == 2)
+            throw new IllegalArgumentException("Equipment with completed transactions cannot be re-purchase/rented.");
+
+      for (Equipment eq : this.equipmentList) {
+           if (eq.getSerialNumber() == equipment.getSerialNumber())
+                throw new DuplicateObjectException(equipment.getSerialNumber(),
+                                               	   this.ID);
+      }
+
+      this.equipmentList.add(equipment.clone());
   }
 
   // remove equipment from the account
   public void removeEquipment(String serialNumber) {
-      /*
-       * if account is inactive, throw InvalidOperationException
-       * validate parameters
-       * if parameters are invalid, throw IllegalArgumentException
-       * if serial number does not exist, throw IllegalArgumentException
-       * if equipment already has completed transaction, throw IllegalArgumentException
-       * check if the account has the given piece of equipment
-       * if found, remove it from the account's equipment list
-       * if not, throw InvalidOperationException
-       *
-       */
+      if (serialNumber == null || serialNumber.length() == 0)
+            throw new IllegalArgumentException("Serial Number was null/empty!");
+
+      if (this.accountStatus == 1)
+            throw new InvalidOperationException(serialNumber,
+                                                "Inactive accounts cannot remove equipment objects",
+                                                this.ID);
+
+      boolean found_flag = false;
+      for (Equipment eq : this.equipmentList) {
+           if (eq.getSerialNumber() == serialNumber)
+                this.equipmentList.remove(eq);
+                found_flag = true;
+      }
+
+      if (!found_flag)
+            throw new InvalidOperationException(serialNumber,
+                                                "Equipment does not exist in this account",
+                                                this.ID);
   }
 
   // complete an equipment transaction
-  public Double completeTransaction(String serialNumber, int status) {
-      /*
-       * if serialNumber does not exist, throw IllegalArgumentException
-       * if account is inactive, throw InvalidOperationException
-       * return the equipment's completeTransaction function
-       *
-       */
-	  return null;
+  public double completeTransaction(String serialNumber, int status) {
+      if (serialNumber == null || serialNumber.length() == 0)
+            throw new IllegalArgumentException("Serial Number was null/empty!");
+
+      if (this.accountStatus == 1)
+            throw new InvalidOperationException(serialNumber,
+                                                "Inactive accounts cannot complete transactions",
+                                                this.ID);
+
+      for (Equipment eq : this.equipmentList) {
+           if (eq.getSerialNumber() == serialNumber)
+                return eq.completeTransaction(status);
+      } 
+
+      throw new IllegalArgumentException("Equipment object '" +
+                                         serialNumber +
+                                         "' does not exist in this account");
   }
 
   // set the account status to inactive
   public void deactivateAccount() {
-       /*
-        * if account is already inactive, throw IllegalStateException
-        * change account status to inactive
-        */
+      if (this.accountStatus == 1)
+            throw new IllegalStateException("Account is already inactive!");
+
+      this.accountStatus = 0;
+  }
+
+  // format the equipment's information into a YAML format
+  public Map generateFileContent() {
+     Map<String, Object> data = new HashMap<String, Object>();
+     data.put("accountID", this.ID);
+     data.put("accountStatus", this.accountStatus);
+     List<Map> equipmentList = new ArrayList<>();
+     for (Equipment equipment : this.equipmentList) {
+         equipmentList.add(equipment.generateFileContent());
+     }
+     data.put("equipmentList", equipmentList);
+     data.put("owner", this.owner.generateFileContent());
+     return data;
   }
 
   // create and return a copy of the Account object

@@ -48,6 +48,13 @@ public class Treadmill extends Equipment {
 	  return super.toString() + " : " +
              String.valueOf(this.maxSpeed);
   }
+
+  // format the equipment's information into a YAML format
+  public Map generateFileContent() {
+     Map<String, Object> data = super.generateFileContent();
+     data.put("maxSpeed", this.maxSpeed);
+     return data;
+  }
  
   // create and return a copy of the treadmill object
   public Treadmill clone() {
