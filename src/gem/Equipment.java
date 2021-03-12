@@ -65,31 +65,24 @@ public abstract class Equipment {
   
   // calculate shipping costs
   public double calculateShipping() {
-      /*
-       * return 29.99
-       */
-     return 0.0;
+     return 29.99;
   }
 
   // calculate the price for a transaction
   public double calculateTransactionPrice() {
-      /*
-       * fail if status is not set
-       * return equipmentPrice + calculateShipping
-       */
-      return 0.0;
+      if (this.status == 0)
+         throw new InvalidOperationException(this.serialNumber,
+                                                "The equipment's status is not set!");
+      return this.equipmentPrice + calculateShipping();
   }
 
   // complete an equipment transaction
-  public double completeTransaction(int status) {
-      /*
-       * throw InvalidCompletionException if status is not set
-       * throw InvalidCompletionException if transaction is already completed
-       * set the equipment status
-       * set the transaction price by calling calculateTransactionPrice
-       * throw InvalidCompletionException if error is encountered
-       */
-	  return 0.0;
+  public void completeTransaction(int status) {
+      if (status != 0)
+         throw new InvalidCompletionException(this.serialNumber,
+                                              "The equipment already has a completed transaction!");
+      this.status = status;
+      this.transactionPrice = calculateTransactionPrice();
   }
 
   // set the status of a given piece of equipment and return whether the action was successful

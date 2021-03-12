@@ -184,7 +184,7 @@ public class Account {
 
       for (Equipment eq : this.equipmentList) {
            if (eq.getSerialNumber() == serialNumber)
-                return eq.completeTransaction(status);
+                eq.completeTransaction(status);
       } 
 
       throw new IllegalArgumentException("Equipment object '" +

@@ -54,10 +54,10 @@ public class StationaryBike extends Equipment {
 
   // calculate the shipping costs
   public double calculateShipping() {
-	  /*
-	   * return super.calculateShipping plus 9.99 if height > 60inches
-	   */
-	  return 0.0;
+      if (height > 60)
+          return super.calculateShipping() + 9.99;
+      else
+          return super.calculateShipping()
   }
   
   // format the stationary bike's information into a presentable string
