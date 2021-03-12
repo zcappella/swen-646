@@ -85,7 +85,7 @@ public class AccountManager {
      if (f.exists()) {
         System.out.println("Account file already exists, removing it and replacing it.");
         if (f.delete())
-            System.out.println("Deleted account file: " + String.valueOf(account.getID()));
+            System.out.println("Deleted account file: " + fileName);
         else
             throw new InvalidOperationException(String.valueOf(account.getID()),
                                                     "Could not delete account file!");
@@ -104,6 +104,7 @@ public class AccountManager {
 	 try {
 		 writer = new FileWriter(this.accountPath + fileName);
 		 yaml.dump(data, writer);
+         System.out.println("Account file updated.");
 	 } catch (IOException e) {
 		 throw new InvalidOperationException(String.valueOf(account.getID()),
                  							 "Could not write account file!");
@@ -116,14 +117,17 @@ public class AccountManager {
      if (equipment == null || accountID <= 0)
             throw new IllegalArgumentException("Account and Equipment values cannot be null/zero values!");
 
+     boolean success = false;
      for (Account account : this.accounts) {
         if (account.getID() == accountID)
         {
             account.addEquipment(equipment.clone());
-            saveToFile(account);
+            saveToFile(account.clone());
+            success = true;
         }
      }
-     throw new IllegalArgumentException("Account '" +
+     if (!success)
+        throw new IllegalArgumentException("Account '" +
                                         String.valueOf(accountID) +
                                         "' does not exist!");
   }
@@ -134,14 +138,17 @@ public class AccountManager {
      if (serialNumber == null || serialNumber.length() ==0 || accountID <= 0)
             throw new IllegalArgumentException("Account and serial number values cannot be null/zero values!");
 
+     boolean success = false;
      for (Account account : this.accounts) {
         if (account.getID() == accountID)
         {
             account.removeEquipment(serialNumber);
-            saveToFile(account);
+            saveToFile(account.clone());
+            success = true;
         }
      }
-     throw new IllegalArgumentException("Account '" +
+     if (!success)
+        throw new IllegalArgumentException("Account '" +
                                         String.valueOf(accountID) +
                                         "' does not exist!");
   }
@@ -152,16 +159,19 @@ public class AccountManager {
      if (accountID <= 0)
             throw new IllegalArgumentException("Account ID cannot be a zero value!");
 
+     boolean success = false;
      for (Account account : this.accounts) {
         if (account.getID() == accountID)
         {
             account.deactivateAccount();
-            saveToFile(account);
+            saveToFile(account.clone());
+            success = true;
         }
      }
-     throw new IllegalArgumentException("Account '" +
-                                        String.valueOf(accountID) +
-                                        "' does not exist!");
+     if (!success)
+        throw new IllegalArgumentException("Account '" +
+                                           String.valueOf(accountID) +
+                                           "' does not exist!");
   }
 
   // complete a transaction for a given account based on the equipment
@@ -170,16 +180,19 @@ public class AccountManager {
      if (accountID <= 0 || serialNumber == null || serialNumber.length() == 0 || status <= 0)
             throw new IllegalArgumentException("Account and equipment values cannot be a null/zero values!");
 
+     boolean success = false;
      for (Account account : this.accounts) {
         if (account.getID() == accountID)
         {
             account.completeTransaction(serialNumber, status);
-            saveToFile(account);
+            saveToFile(account.clone());
+            success = true;
         }
      }
-     throw new IllegalArgumentException("Account '" +
-                                        String.valueOf(accountID) +
-                                        "' does not exist!");
+     if (!success)
+        throw new IllegalArgumentException("Account '" +
+                                           String.valueOf(accountID) +
+                                           "' does not exist!");
   }
 
   // add a new account
@@ -193,8 +206,8 @@ public class AccountManager {
             throw new DuplicateObjectException(String.valueOf(account.getID()));
      }
 
-     this.accounts.add(account.clone());
-     saveToFile(account);
+     this.accounts.add(account);
+     saveToFile(account.clone());
   }
 
   // remove a given account
@@ -203,7 +216,7 @@ public class AccountManager {
      if (accountID <= 0)
             throw new IllegalArgumentException("Account ID cannot be zero!");
 
-     boolean found_flag = false;
+     boolean success = false;
      for (Account account : this.accounts) {
         if (account.getID() == accountID) {
             for (Equipment equipment : account.getEquipmentList()) {
@@ -224,11 +237,11 @@ public class AccountManager {
                 throw new InvalidOperationException(String.valueOf(account.getID()),
                                                     "Could not delete account file!");
 
-            found_flag = true;
+            success = true;
             break;
         }
      }
-     if (!found_flag)
+     if (!success)
         throw new IllegalArgumentException("Account does not exist!");
   }
 }

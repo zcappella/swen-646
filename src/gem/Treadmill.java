@@ -24,6 +24,17 @@ public class Treadmill extends Equipment {
   }
 
   // Treadmill constructor
+  public Treadmill(String serialNumber, String brand, String model, double equipPrice, double transactionPrice, int status, double maxSpeed) {
+      super(serialNumber, brand, model, equipPrice, transactionPrice, status);
+      
+      // validate parameters
+      if (maxSpeed <= 0.0)
+          throw new IllegalArgumentException("Treadmill values must be non-zero values!");
+    
+      this.maxSpeed = maxSpeed;
+  }
+
+  // Treadmill constructor
   public Treadmill(Map yamlContent) {
       super((String) yamlContent.get("serialNumber"),
             (String) yamlContent.get("brand"),
@@ -63,6 +74,8 @@ public class Treadmill extends Equipment {
         this.brand,
         this.model,
         this.equipmentPrice,
+        this.transactionPrice,
+        this.status,
         this.maxSpeed);
   }
 }

@@ -26,6 +26,18 @@ public class Stepper extends Equipment {
   }
 
   // Stepper constructor
+  public Stepper(String serialNumber, String brand, String model, double equipPrice, double transactionPrice, int status, boolean heartMon, int height) {
+      super(serialNumber, brand, model, equipPrice, transactionPrice, status);
+      
+      // validate parameters
+      if (height <= 0)
+          throw new IllegalArgumentException("Stepper values must be non-zero values!");
+    
+      this.heartMonitor = heartMon;
+      this.height = height;
+  }
+
+  // Stepper constructor
   public Stepper(Map yamlContent) {
       super((String) yamlContent.get("serialNumber"),
             (String) yamlContent.get("brand"),
@@ -57,7 +69,7 @@ public class Stepper extends Equipment {
       if (height > 60)
           return super.calculateShipping() + 9.99;
       else
-          return super.calculateShipping()
+          return super.calculateShipping();
   }
   
  // format the stepper's information into a presentable string
@@ -82,6 +94,8 @@ public class Stepper extends Equipment {
         this.brand,
         this.model,
         this.equipmentPrice,
+        this.transactionPrice,
+        this.status,
         this.heartMonitor,
         this.height);
   }

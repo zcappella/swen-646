@@ -35,6 +35,21 @@ public class Account {
   }
 
   // Account constructor
+  public Account(int ID, Owner owner, int accountStatus, List<Equipment> equipmentList) {
+     // Ensure that none of the params are null or zero values
+     if (ID == 0 || owner == null)
+            throw new IllegalArgumentException("Account values cannot be null/zero values!");
+
+     this.ID = ID;
+     this.owner = owner.clone();
+     this.accountStatus = accountStatus;
+     List<Equipment> equipList = new ArrayList<>();
+     for (Equipment equipment : equipmentList)
+    	 equipList.add(equipment.clone());
+     this.equipmentList = equipList;
+  }
+
+  // Account constructor
   public Account(String fileName) {
      // Ensure that none of the params are null or zero values
      if (fileName == null || fileName.length() == 0)
@@ -60,19 +75,19 @@ public class Account {
 	    	 String serialNumber = (String) equipment.get("serialNumber");
 	    	 if (serialNumber.substring(0,2).equals("TH")) {
 	    		 Treadmill loadedEquipment = new Treadmill(equipment);
-	    		 fileList.add(loadedEquipment);
+	    		 fileList.add(loadedEquipment.clone());
 	    		 continue;
 	    	 }
 	    	 
 	    	 if (serialNumber.substring(0,2).equals("ST")) {
 	    		 Stepper loadedEquipment = new Stepper(equipment);
-	    		 fileList.add(loadedEquipment);
+	    		 fileList.add(loadedEquipment.clone());
 	    		 continue;
 	    	 }
 	    	 
 	    	 if (serialNumber.substring(0,2).equals("SB")) {
 	    		 StationaryBike loadedEquipment = new StationaryBike(equipment);
-	    		 fileList.add(loadedEquipment);
+	    		 fileList.add(loadedEquipment.clone());
 	    		 continue;
 	    	 }
 	    	 
@@ -160,7 +175,12 @@ public class Account {
                                                 this.ID);
 
       boolean found_flag = false;
-      for (Equipment eq : this.equipmentList) {
+      List<Equipment> equipmentList = new ArrayList<>();
+      for (Equipment equipment : this.equipmentList) {
+         equipmentList.add(equipment.clone());
+      }
+
+      for (Equipment eq : equipmentList) {
            if (eq.getSerialNumber() == serialNumber)
                 this.equipmentList.remove(eq);
                 found_flag = true;
@@ -173,7 +193,7 @@ public class Account {
   }
 
   // complete an equipment transaction
-  public double completeTransaction(String serialNumber, int status) {
+  public void completeTransaction(String serialNumber, int status) {
       if (serialNumber == null || serialNumber.length() == 0)
             throw new IllegalArgumentException("Serial Number was null/empty!");
 
@@ -181,15 +201,24 @@ public class Account {
             throw new InvalidOperationException(serialNumber,
                                                 "Inactive accounts cannot complete transactions",
                                                 this.ID);
-
+      boolean success_flag = false;
+      List<Equipment> equipmentList = new ArrayList<>();
       for (Equipment eq : this.equipmentList) {
-           if (eq.getSerialNumber() == serialNumber)
+           if (eq.getSerialNumber() == serialNumber) {
                 eq.completeTransaction(status);
+                equipmentList.add(eq.clone());
+                success_flag = true;
+           }
+           else
+                equipmentList.add(eq.clone());
       } 
 
-      throw new IllegalArgumentException("Equipment object '" +
-                                         serialNumber +
-                                         "' does not exist in this account");
+      if (!success_flag)
+          throw new IllegalArgumentException("Equipment object '" +
+                                             serialNumber +
+                                             "' does not exist in this account");
+      else
+          this.equipmentList = equipmentList;
   }
 
   // set the account status to inactive
@@ -218,6 +247,8 @@ public class Account {
   public Account clone() {
       return new Account(
         this.ID,
-        this.owner.clone());
+        this.owner.clone(),
+        this.accountStatus,
+        this.equipmentList);
   }
 }

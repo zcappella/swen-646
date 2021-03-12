@@ -33,6 +33,21 @@ public abstract class Equipment {
       this.transactionPrice = 0.0;
   }
 
+  // equipment class constructor
+  public Equipment(String serialNumber, String brand, String model, double equipPrice, double transactionPrice, int status) {
+      // validate parameters
+      if (serialNumber == null || serialNumber.length() == 0 || brand == null || brand.length() == 0
+              || model == null || model.length() == 0 || equipPrice <= 0 || transactionPrice < 0.0 || status < 0)
+          throw new IllegalArgumentException("Equipment values cannot be null/zero values!");
+
+      this.serialNumber = serialNumber;
+      this.brand = brand;
+      this.model = model;
+      this.equipmentPrice = equipPrice;
+      this.status = status;
+      this.transactionPrice = transactionPrice;
+  }
+
   // get the equipment's serial number
   public String getSerialNumber() {
      return this.serialNumber;
@@ -72,13 +87,19 @@ public abstract class Equipment {
   public double calculateTransactionPrice() {
       if (this.status == 0)
          throw new InvalidOperationException(this.serialNumber,
-                                                "The equipment's status is not set!");
-      return this.equipmentPrice + calculateShipping();
+                                             "The equipment's status is not set!");
+      if (this.status == 1)
+          return this.equipmentPrice + calculateShipping();
+      else if (this.status == 2)
+          return (this.equipmentPrice * (15.0/100.0)) + calculateShipping();
+      else
+          throw new InvalidOperationException(this.serialNumber,
+                                              "The equipment's status is not valid!");
   }
 
   // complete an equipment transaction
   public void completeTransaction(int status) {
-      if (status != 0)
+      if (this.status != 0)
          throw new InvalidCompletionException(this.serialNumber,
                                               "The equipment already has a completed transaction!");
       this.status = status;

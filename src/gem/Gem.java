@@ -27,6 +27,7 @@ public class Gem {
         testScenario4();
         testScenario5();
         testScenario6();
+        testScenario7();
     }
     
     /*
@@ -205,8 +206,34 @@ public class Gem {
         }
         Account account = new Account(accountCount++, generateOwnerStub().clone());
         am.addAccount(account);
-        System.out.println("Successfully wrote new account file.");
         am.removeAccount(account.getID());
+        System.out.println("\n");
+    }
+
+    /*
+     * Create a new Account object, add equipment to it, and complete a transaction
+     */
+    public static void testScenario7() {
+        System.out.println("Test Scenario #7:");
+        AccountManager am = new AccountManager(accountPath);
+        
+        List<Account> accountList = am.getAccounts();
+        int accountCount = 1;
+        for (Account account : accountList) {
+            accountCount++;
+        }
+        Account account = new Account(accountCount++, generateOwnerStub().clone());
+        am.addAccount(account);
+        System.out.println("Successfully wrote new account file.");
+        Stepper stepper = new Stepper(
+            "ST000001",
+            "Test Stepper Brand",
+            "Test Stepper Model",
+            975.50,
+            true,
+            12);
+        am.addEquipmentToAccount(account.getID(), stepper);
+        am.completeTransactionForAccount(account.getID(), stepper.getSerialNumber(), 2);
         System.out.println("\n");
     }
 }

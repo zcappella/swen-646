@@ -26,6 +26,18 @@ public class StationaryBike extends Equipment {
   }
 
   // Stationary Bike constructor
+  public StationaryBike(String serialNumber, String brand, String model, double equipPrice, double transactionPrice, int status, int resistanceLevels, int height) {
+      super(serialNumber, brand, model, equipPrice, transactionPrice, status);
+      
+      // validate parameters
+      if (resistanceLevels <= 0 || height <= 0)
+          throw new IllegalArgumentException("Stationary Bike values must be non-zero values!");
+    
+      this.resistanceLevels = resistanceLevels;
+      this.height = height;
+  }
+
+  // Stationary Bike constructor
   public StationaryBike(Map yamlContent) {
       super((String) yamlContent.get("serialNumber"),
             (String) yamlContent.get("brand"),
@@ -57,7 +69,7 @@ public class StationaryBike extends Equipment {
       if (height > 60)
           return super.calculateShipping() + 9.99;
       else
-          return super.calculateShipping()
+          return super.calculateShipping();
   }
   
   // format the stationary bike's information into a presentable string
@@ -82,6 +94,8 @@ public class StationaryBike extends Equipment {
         this.brand,
         this.model,
         this.equipmentPrice,
+        this.transactionPrice,
+        this.status,
         this.resistanceLevels,
         this.height);
   }
