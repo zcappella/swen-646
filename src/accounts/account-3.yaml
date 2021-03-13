@@ -1,0 +1,10 @@
+accountStatus: 0
+owner:
+  emailAddress: stub@gmail.com
+  phoneNumber: 111-111-1111
+  address: {zipcode: '12345', city: Stub City, street: Address Stub Street, state: ST}
+  name: Owner Stub
+accountID: 3
+equipmentList:
+- {heartMonitor: true, serialNumber: ST000001, equipmentPrice: 975.5, transactionPrice: 176.315,
+  model: Test Stepper Model, brand: Test Stepper Brand, status: 2, height: 12}

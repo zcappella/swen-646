@@ -234,6 +234,11 @@ public class Gem {
             12);
         am.addEquipmentToAccount(account.getID(), stepper);
         am.completeTransactionForAccount(account.getID(), stepper.getSerialNumber(), 2);
+        try {
+            am.removeAccount(account.getID());
+        } catch (InvalidOperationException ioe) {
+            System.out.println("Was not able to remove account with completed transaction, as expected.");
+        }
         System.out.println("\n");
     }
 }
