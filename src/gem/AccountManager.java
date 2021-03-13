@@ -50,7 +50,7 @@ public class AccountManager {
 	 List<Account> accountList = new ArrayList<>();
 
      File f = new File(this.accountPath);
-     if (!f.exists())
+     if (!f.exists() || !f.isDirectory())
         throw new InvalidLoadException(this.accountPath, "Account directory does not exist!");
      File fileList[] = f.listFiles();
      if (fileList.length == 0)
@@ -81,30 +81,13 @@ public class AccountManager {
             fileName = "account-" + String.valueOf(account.getID()) + ".yaml";
      else
             fileName = "/account-" + String.valueOf(account.getID()) + ".yaml";
-     File f = new File(this.accountPath + fileName);
-     if (f.exists()) {
-        System.out.println("Account file already exists, removing it and replacing it.");
-        if (f.delete())
-            System.out.println("Deleted account file: " + fileName);
-        else
-            throw new InvalidOperationException(String.valueOf(account.getID()),
-                                                    "Could not delete account file!");
-     }
-     else
-		try {
-			f.createNewFile();
-		} catch (IOException e) {
-			throw new InvalidOperationException(String.valueOf(account.getID()),
-                                                "Could not create account file!");
-		}
 
      Map<String, Object> data = account.generateFileContent();
      Yaml yaml = new Yaml();
      FileWriter writer;
 	 try {
-		 writer = new FileWriter(this.accountPath + fileName);
+		 writer = new FileWriter(this.accountPath + fileName, false);
 		 yaml.dump(data, writer);
-         System.out.println("Account file updated.");
 	 } catch (IOException e) {
 		 throw new InvalidOperationException(String.valueOf(account.getID()),
                  							 "Could not write account file!");
@@ -231,12 +214,7 @@ public class AccountManager {
             else
                     fileName = "/account-" + String.valueOf(account.getID()) + ".yaml";
             File f = new File(this.accountPath + fileName);
-            if (f.delete())
-                System.out.println("Deleted account file: " + String.valueOf(account.getID()));
-            else
-                throw new InvalidOperationException(String.valueOf(account.getID()),
-                                                    "Could not delete account file!");
-
+            f.delete();
             success = true;
             break;
         }

@@ -16,7 +16,7 @@ public class InvalidOperationException extends RuntimeException {
   public String toString() {
      if (this.accountID > 0)
     	 return this.getClass().getSimpleName() +
-                "The object with ID " +
+                " The object with ID " +
                 this.objectID +
                 " could not be removed because " +
                 this.errorMsg +
@@ -25,7 +25,7 @@ public class InvalidOperationException extends RuntimeException {
                 " tried to remove it!";
      else
     	return this.getClass().getSimpleName() +
-               "The object with ID " +
+               " The object with ID " +
                this.objectID +
                " could not be removed because " +
                this.errorMsg;
@@ -34,23 +34,25 @@ public class InvalidOperationException extends RuntimeException {
 
   // InvalidOperationException constructor
   public InvalidOperationException(String objectID, String errorMsg) {
-      super();
-      if (objectID == null || objectID.length() == 0 || errorMsg == null || errorMsg.length() == 0)
-          throw new IllegalArgumentException("InvalidOperationException values cannot be null/zero values!");
+      super("The object with ID " +
+            objectID +
+            " could not be removed because " +
+            errorMsg);
       this.objectID = objectID;
       this.errorMsg = errorMsg;
-      System.out.println(this.toString());
   }
 
   // InvalidOperationException constructor
   public InvalidOperationException(String objectID, String errorMsg, int accountID) {
-      super();
-      if (objectID == null || objectID.length() == 0 || errorMsg == null || errorMsg.length() == 0
-              || accountID <= 0)
-          throw new IllegalArgumentException("InvalidOperationException values cannot be null/zero values!");
+      super("The object with ID " +
+            objectID +
+            " could not be removed because " +
+            errorMsg +
+            ", and the account " +
+            String.valueOf(accountID) +
+            " tried to remove it!");
       this.objectID = objectID;
       this.errorMsg = errorMsg;
       this.accountID = accountID;
-      System.out.println(this.toString());
   }
 }

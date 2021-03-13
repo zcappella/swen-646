@@ -22,11 +22,11 @@ public class InvalidCompletionException extends RuntimeException {
 
   // InvalidCompletionException constructor
   public InvalidCompletionException(String equipmentID, String errorMsg) {
-      super();
-      if (equipmentID == null || equipmentID.length() == 0 || errorMsg == null || errorMsg.length() == 0)
-          throw new IllegalArgumentException("InvalidCompletionException values cannot be null/zero values!");
+      super("The transaction for equipment ID " +
+            equipmentID +
+            " could not be completed because " +
+            errorMsg);
       this.equipmentID = equipmentID;
       this.errorMsg = errorMsg;
-      System.out.println(this.toString());
   }
 }

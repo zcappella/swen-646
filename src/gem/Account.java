@@ -175,15 +175,12 @@ public class Account {
                                                 this.ID);
 
       boolean found_flag = false;
-      List<Equipment> equipmentList = new ArrayList<>();
-      for (Equipment equipment : this.equipmentList) {
-         equipmentList.add(equipment.clone());
-      }
-
-      for (Equipment eq : equipmentList) {
-           if (eq.getSerialNumber() == serialNumber)
-                this.equipmentList.remove(eq);
-                found_flag = true;
+      for (int i=0; i < equipmentList.size(); i++) {
+           if (equipmentList.get(i).getSerialNumber().equalsIgnoreCase(serialNumber)) {
+               equipmentList.remove(i);
+               found_flag = true;
+               break;
+           }
       }
 
       if (!found_flag)

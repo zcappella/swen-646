@@ -22,11 +22,11 @@ public class InvalidLoadException extends RuntimeException {
 
   // InvalidLoadException constructor
   public InvalidLoadException(String fileName, String errorMsg) {
-	  super();
-      if (fileName == null || fileName.length() == 0 || errorMsg == null || errorMsg.length() == 0)
-          throw new IllegalArgumentException("InvalidLoadException values cannot be null/zero values!");
+	  super("The account with file name " +
+            fileName +
+            " could not be loaded because " +
+            errorMsg);
       this.fileName = fileName;
       this.errorMsg = errorMsg;
-      System.out.println(this.toString());
   }
 }

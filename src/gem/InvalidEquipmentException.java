@@ -22,11 +22,11 @@ public class InvalidEquipmentException extends RuntimeException {
 
   // InvalidEquipmentException constructor
   public InvalidEquipmentException(String equipmentData, String errorMsg) {
-      super();
-      if (equipmentData == null || equipmentData.length() == 0 || equipmentData == null || equipmentData.length() == 0)
-          throw new IllegalArgumentException("InvalidEquipmentException values cannot be null/zero values!");
+      super("The equipment data " +
+            equipmentData +
+            " is not properly formatted because " +
+            errorMsg);
       this.equipmentData = equipmentData;
       this.errorMsg = errorMsg;
-      System.out.println(this.toString());
   }
 }

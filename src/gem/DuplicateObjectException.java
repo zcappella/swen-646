@@ -29,20 +29,20 @@ public class DuplicateObjectException extends RuntimeException {
 
   // DuplicateObjectException constructor
   public DuplicateObjectException(String objectID) {
-      super();
-      if (objectID == null || objectID.length() == 0)
-          throw new IllegalArgumentException("DuplicateObjectException values cannot be null/zero values!");
+      super("The object with ID " +
+            objectID +
+            " already exists!");
       this.objectID = objectID;
-      System.out.println(this.toString());
   }
 
   // DuplicateObjectException constructor
   public DuplicateObjectException(String objectID, int accountID) {
-      super();
-      if (objectID == null || objectID.length() == 0 || accountID <= 0)
-          throw new IllegalArgumentException("DuplicateObjectException values cannot be null/zero values!");
+      super("The object with ID " +
+            objectID +
+            " already exists, and the account "+
+            String.valueOf(accountID) +
+            " tried to add it!");
       this.objectID = objectID;
       this.accountID = accountID;
-      System.out.println(this.toString());
   }
 }
