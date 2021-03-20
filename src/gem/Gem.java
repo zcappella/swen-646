@@ -28,6 +28,10 @@ public class Gem {
         testScenario5();
         testScenario6();
         testScenario7();
+        testScenario8();
+        testScenario9();
+        testScenario10();
+        testScenario11();
     }
     
     /*
@@ -238,6 +242,103 @@ public class Gem {
             am.removeAccount(account.getID());
         } catch (InvalidOperationException ioe) {
             System.out.println("Was not able to remove account with completed transaction, as expected.");
+        }
+        System.out.println("\n");
+    }
+
+    /*
+     * Create a new Account object, add equipment to it, and complete a transaction
+     */
+    public static void testScenario8() {
+        System.out.println("Test Scenario #8:");
+        AccountManager am = new AccountManager(accountPath);
+        
+        List<Account> accountList = am.getAccounts();
+        int accountCount = 1;
+        for (Account account : accountList) {
+            accountCount++;
+        }
+        Account account = new Account(accountCount++, generateOwnerStub().clone());
+        am.addAccount(account);
+        System.out.println("Successfully wrote new account file.");
+        StationaryBike sb = new StationaryBike(
+            "SB000001",
+            "Test Stationary Bike Brand",
+            "Test Stationary Bike Model",
+            899.99,
+            15,
+            4);
+        am.addEquipmentToAccount(account.getID(), sb);
+        try {
+            am.addEquipmentToAccount(account.getID(), sb);
+        } catch (DuplicateObjectException doe) {
+            System.out.println("Was not able to equipment to account a second time, as expected.");
+        }
+        am.removeAccount(account.getID());
+        System.out.println("\n");
+    }
+
+    /*
+     * Attempt to create a new Account manager with invalid account path
+     */
+    public static void testScenario9() {
+        System.out.println("Test Scenario #9:");
+        String path = "/Users/zaccappella/path/to/nowhere";
+        try {
+            AccountManager am = new AccountManager(path);    
+        } catch (InvalidLoadException ile) {
+            System.out.println("Could not load account from non-existant directory");
+        }
+        System.out.println("\n");
+    }
+
+    /*
+     * Create a new Account object and deactivate it
+     */
+    public static void testScenario10() {
+        System.out.println("Test Scenario #10:");
+        AccountManager am = new AccountManager(accountPath);
+        
+        List<Account> accountList = am.getAccounts();
+        int accountCount = 1;
+        for (Account account : accountList) {
+            accountCount++;
+        }
+        Account account = new Account(accountCount++, generateOwnerStub().clone());
+        am.addAccount(account);
+        am.deactivateAccount(account.getID());
+        System.out.println("Account is inactive!");
+        am.removeAccount(account.getID());
+        System.out.println("\n");
+    }
+
+    /*
+     * Create a new Account object, add equipment to it, and complete a transaction
+     */
+    public static void testScenario11() {
+        System.out.println("Test Scenario #11:");
+        AccountManager am = new AccountManager(accountPath);
+        
+        List<Account> accountList = am.getAccounts();
+        int accountCount = 1;
+        for (Account account : accountList) {
+            accountCount++;
+        }
+        Account account = new Account(accountCount++, generateOwnerStub().clone());
+        am.addAccount(account);
+        System.out.println("Successfully wrote new account file.");
+        Treadmill treadmill = new Treadmill(
+            "TH000001",
+            "Test Treadmill Brand",
+            "Test Treadmill Model",
+            100.00,
+            12.0);
+        am.addEquipmentToAccount(account.getID(), treadmill);
+        am.completeTransactionForAccount(account.getID(), treadmill.getSerialNumber(), 2);
+        try {
+            am.completeTransactionForAccount(account.getID(), treadmill.getSerialNumber(), 2);
+        } catch (InvalidCompletionException ice) {
+            System.out.println("Was not able to complete a transaction a second time, as expected.");
         }
         System.out.println("\n");
     }
